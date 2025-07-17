@@ -9,6 +9,8 @@ import {
 import { Product } from "../../components";
 import { useStateContext } from "../../context/StateContext";
 
+import Head from 'next/head';
+
 const ProductDetails = ({ product, products }: any) => {
   const { image, name, details, price } = product;
   const [index, setIndex] = useState(0);
@@ -16,6 +18,14 @@ const ProductDetails = ({ product, products }: any) => {
 
   return (
     <div>
+      <Head>
+        <title>{name}</title>
+        <meta property="og:title" content={name}/>
+        <meta property="og:description" content={details}/>
+        <meta property="og:image" content={urlFor(image && image[index]).toString()}/>
+        <meta property="og:url" content={`http://sheetnhac.com/product/${product.slug.current}`}/>
+        <meta property="og:type" content="product" />
+      </Head>
       <div className="product-detail-container">
         <div>
           <div className="image-container">
@@ -55,7 +65,7 @@ const ProductDetails = ({ product, products }: any) => {
           <h4>Details: </h4>
           <p>{details}</p>
           <p className="price">${price}</p>
-
+          <div className="sharethis-inline-share-buttons"></div>
           <div className="quantity">
             <h3>Quantity</h3>
             <p className="quantity-desc">

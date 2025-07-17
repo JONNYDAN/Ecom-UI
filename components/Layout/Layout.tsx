@@ -11,6 +11,7 @@ const Layout = (props: Props) => {
     <div className="layout">
       <Head>
         <title>E-commerce</title>
+        <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=6878e0f491425d0019d5b2f8&product=sop' async={true}></script>      
       </Head>
       <header>
         <Navbar />
