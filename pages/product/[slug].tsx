@@ -10,6 +10,7 @@ import { Product } from "../../components";
 import { useStateContext } from "../../context/StateContext";
 
 import Head from 'next/head';
+import ShareButtons  from "../../components/ShareButtons";
 
 const ProductDetails = ({ product, products }: any) => {
   const { image, name, details, price } = product;
@@ -64,8 +65,11 @@ const ProductDetails = ({ product, products }: any) => {
           </div>
           <h4>Details: </h4>
           <p>{details}</p>
+          
+          <ShareButtons />
+
           <p className="price">${price}</p>
-          <div className="sharethis-inline-share-buttons"></div>
+          
           <div className="quantity">
             <h3>Quantity</h3>
             <p className="quantity-desc">
