@@ -23,7 +23,7 @@ const ProductDetails = ({ product, products }: any) => {
         <title>{name}</title>
         <meta property="og:title" content={name}/>
         <meta property="og:description" content={details}/>
-        <meta property="og:image" content={urlFor(image && image[index]).toString()}/>
+        <meta property="og:image" content={urlFor(image && image[0]).width(200).url()}/>
         <meta property="og:url" content={`http://sheetnhac.com/product/${product.slug.current}`}/>
         <meta property="og:type" content="product" />
       </Head>
@@ -83,7 +83,12 @@ const ProductDetails = ({ product, products }: any) => {
               </span>
             </p>
           </div>
-          <ShareButtons />
+          <ShareButtons
+            name={name}
+            details={details}
+            image={urlFor(image && image[0]).width(200).url()} // hình nhỏ
+            url={`http://sheetnhac.com/product/${product.slug.current}`}
+          />
 
           <div className="buttons">
             <button
