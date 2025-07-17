@@ -66,7 +66,6 @@ const ProductDetails = ({ product, products }: any) => {
           <h4>Details: </h4>
           <p>{details}</p>
           
-          <ShareButtons />
 
           <p className="price">${price}</p>
           
@@ -84,6 +83,7 @@ const ProductDetails = ({ product, products }: any) => {
               </span>
             </p>
           </div>
+          <ShareButtons />
 
           <div className="buttons">
             <button
