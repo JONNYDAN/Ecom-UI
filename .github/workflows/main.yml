@@ -19,9 +19,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            cd /Ecom-UI
+            cd Ecom-UI
             git fetch origin
             git reset --hard origin/production
             npm install
-            npm run build
             pm2 reload ecom_web
