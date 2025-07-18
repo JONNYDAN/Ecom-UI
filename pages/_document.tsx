@@ -35,12 +35,12 @@ export default function Document() {
         <script dangerouslySetInnerHTML={{
           __html: `
             var chatbox = document.getElementById('fb-customer-chat');
-            chatbox.setAttribute("page_id", "744142895445674");
+            chatbox.setAttribute("page_id", "61578326255422");
             chatbox.setAttribute("attribution", "biz_inbox");
             window.fbAsyncInit = function() {
               FB.init({
                 xfbml            : true,
-                version          : 'v17.0'
+                version          : 'v18.0'
               });
             };
             (function(d, s, id) {
