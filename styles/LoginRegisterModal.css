@@ -1,0 +1,7 @@
+.login-modal-btn {
+    background-color: #f02d34;
+}
+
+.login-modal-btn:hover {
+    background-color: rgba(234, 22, 22, 1.00);
+}

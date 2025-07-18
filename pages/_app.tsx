@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import "../styles/ShareButtons.css";
+import "../styles/LoginRegisterModal.css";
 
 import type { AppProps } from "next/app";
 import { Toaster } from "react-hot-toast";
