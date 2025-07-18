@@ -759,3 +759,58 @@ margin-top: 160px;
   margin: auto;
 }
 }
+.payment-modal-overlay {
+  position: fixed !important;
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0;
+  background: rgba(0,0,0,0.5) !important;
+  z-index: 9999 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(3px);
+  animation: fadeIn 0.3s ease;
+}
+
+.payment-modal {
+  background: #fff;
+  padding: 32px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 450px;
+  margin: auto;
+  z-index: 10000 !important;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to { 
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.payment-btn {
+  transition: transform 0.2s ease;
+}
+
+.payment-btn:hover {
+  transform: translateY(-2px);
+}
+
+.payment-btn:active {
+  transform: translateY(0);
+}

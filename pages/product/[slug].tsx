@@ -11,11 +11,13 @@ import { useStateContext } from "../../context/StateContext";
 
 import Head from 'next/head';
 import ShareButtons  from "../../components/ShareButtons";
+import PaymentModal from "../../components/PaymentModal";
 
 const ProductDetails = ({ product, products }: any) => {
   const { image, name, details, price } = product;
   const [index, setIndex] = useState(0);
   const { decreaseQty, increaseQty, qty, onAdd } = useStateContext();
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   return (
     <div>
@@ -98,10 +100,20 @@ const ProductDetails = ({ product, products }: any) => {
             >
               Add to Cart
             </button>
-            <button type="button" className="buy-now" onClick={() => {}}>
-              Buy Now
+            <button
+              type="button"
+              className="buy-now"
+              onClick={() => setShowPaymentModal(true)}
+            >
+              PURCHASE
             </button>
           </div>
+          <PaymentModal
+            open={showPaymentModal}
+            onClose={() => setShowPaymentModal(false)}
+            product={product}
+            qty={qty}
+          />
         </div>
       </div>
 

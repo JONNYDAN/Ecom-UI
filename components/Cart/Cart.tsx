@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import {
   AiOutlineMinus,
@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 
 import { useStateContext } from "../../context/StateContext";
 import { urlFor } from "../../lib/client";
-import getStripe from "../../lib/getStripe";
+import PaymentModal from "../PaymentModal";
 
 type Props = {};
 
@@ -26,25 +26,10 @@ const Cart = (props: Props) => {
     onRemove,
   } = useStateContext();
 
-  const handleCheckout = async () => {
-    const stripe = await getStripe();
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
-    const response = await fetch("/api/stripe", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(cartItems),
-    });
-
-    if (response.status === 500) return;
-
-    const data = await response.json();
-
-    toast.loading("Redirecting...");
-
-    stripe.redirectToCheckout({ sessionId: data.id });
-  };
+  const firstProduct = cartItems[0];
+  const firstQty = firstProduct?.quantity || 1;
 
   return (
     <div className="cart-wrapper" ref={cartRef}>
@@ -133,12 +118,22 @@ const Cart = (props: Props) => {
             </div>
 
             <div className="btn-container">
-              <button type="button" className="btn" onClick={handleCheckout}>
+              <button
+                type="button"
+                className="btn"
+                onClick={() => setShowPaymentModal(true)}
+              >
                 Purchase
               </button>
             </div>
           </div>
         )}
+        <PaymentModal
+          open={showPaymentModal}
+          onClose={() => setShowPaymentModal(false)}
+          product={firstProduct}
+          qty={firstQty}
+        />
       </div>
     </div>
   );
