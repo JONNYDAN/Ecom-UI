@@ -814,3 +814,9 @@ margin-top: 160px;
 .payment-btn:active {
   transform: translateY(0);
 }
+.fb-customerchat {
+  right: auto !important;
+  left: 24px !important;
+  bottom: 24px !important;
+  z-index: 9999 !important;
+}
