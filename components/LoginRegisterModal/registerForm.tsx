@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { AccountContext } from "./accountContext";
-import { Marginer } from "./marginer";
 
 export function RegisterForm() {
   const { switchToLogin } = useContext(AccountContext);
@@ -12,11 +11,11 @@ export function RegisterForm() {
         <input className="login-modal-input" type="password" placeholder="Password" />
         <input className="login-modal-input" type="password" placeholder="Confirm Password" />
       </form>
-      <Marginer direction="vertical" margin={10} />
+      <span style={{ display: "flex", height: "10px" }} />
       <button className="login-modal-submit-button" type="submit">
         Sign up
       </button>
-      <Marginer direction="vertical" margin="5px" />
+      <span style={{ display: "flex", height: "10px" }} />
       <p className="login-modal-line-text">
         {" "}
         Already have an account?{" "}

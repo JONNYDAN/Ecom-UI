@@ -27,7 +27,6 @@ const Navbar = (props: Props) => {
           <AiOutlineShopping />
           <span className="cart-item-qty">{totalQuantities}</span>
         </button>
-
         <button
           type="button"
           className="user-icon"

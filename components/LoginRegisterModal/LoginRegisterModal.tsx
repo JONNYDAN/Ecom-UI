@@ -4,6 +4,7 @@ import { RegisterForm } from "./registerForm";
 import { motion } from "framer-motion";
 import { AccountContext } from "./accountContext";
 
+
 type LoginRegisterModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -45,7 +46,7 @@ export default function LoginRegisterModal({
     }
 
     return () => {
-      document.body.classList.remove("no-scroll"); 
+      document.body.classList.remove("no-scroll");
     };
   }, [isOpen]);
 
@@ -93,14 +94,18 @@ export default function LoginRegisterModal({
               <div className="login-modal-header-container">
                 <div className="login-modal-header-text">Welcome</div>
                 <div className="login-modal-header-text">Back</div>
-                <div className="login-modal-small-text">Please login to continue!</div>
+                <div className="login-modal-small-text">
+                  Please login to continue!
+                </div>
               </div>
             )}
             {active === "register" && (
               <div className="login-modal-header-container">
                 <div className="login-modal-header-text">Create</div>
                 <div className="login-modal-header-text">Account</div>
-                <div className="login-modal-small-text">Please sign up to continue!</div>
+                <div className="login-modal-small-text">
+                  Please sign up to continue!
+                </div>
               </div>
             )}
           </div>
