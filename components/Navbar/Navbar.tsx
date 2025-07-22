@@ -25,6 +25,7 @@ const Navbar = (props: Props) => {
         // Lấy thông tin người dùng từ Firestore
         const userDoc = await getDoc(doc(db, "users", currentUser.uid));
         if (userDoc.exists()) {
+          console.log("User Firestore data:", userDoc.data());
           setUserData(userDoc.data());
         }
       } else {
@@ -66,7 +67,7 @@ const Navbar = (props: Props) => {
         ) : (
           <div className="navbar-profile">
             <img 
-              src={userData.avatar} 
+              src={userData?.avatar} 
               alt="User Avatar" 
               className="user-avatar"
             />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { client, urlFor } from "../../lib/client";
 import {
   AiOutlineMinus,
@@ -12,13 +12,43 @@ import { useStateContext } from "../../context/StateContext";
 import Head from 'next/head';
 import ShareButtons  from "../../components/ShareButtons";
 import PaymentModal from "../../components/PaymentModal";
+import { IProduct } from "../../dto";
+import { fetchProducts, fetchBanners } from "../../lib/firestoreFetch";
 
-const ProductDetails = ({ product, products }: any) => {
+const ProductDetails = ({ product }: any) => {
+  const [products, setProducts] = useState<IProduct[]>([]);
+  
   const { image, name, details, price } = product;
   const [index, setIndex] = useState(0);
   const { decreaseQty, increaseQty, qty, onAdd } = useStateContext();
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [productsData] = await Promise.all([
+          fetchProducts(),
+        ]);
+        setProducts(productsData);
+        console.log("Products data from Firestore:", productsData); // Kiểm tra dữ liệu
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+  return (
+    <div className="flex justify-center items-center h-screen">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+    </div>
+  );
+}
   return (
     <div>
       <Head>

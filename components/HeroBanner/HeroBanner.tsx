@@ -15,7 +15,7 @@ const HeroBanner = ({ heroBanner }: Props) => {
       <h3>{heroBanner.midText}</h3>
       <h1>{heroBanner.largeText1}</h1>
       <img
-        src={urlFor(heroBanner.image).toString()}
+        src={heroBanner.image}
         alt="headphones"
         className="hero-banner-image"
       />
