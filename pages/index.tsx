@@ -1,13 +1,41 @@
+import { useEffect, useState } from "react";
 import { Product, FooterBanner, HeroBanner } from "../components";
-import { IBanner, IProduct } from "../dto";
-import { client } from "../lib/client";
+import { IProduct, IBanner } from "../dto";
+import { fetchProducts, fetchBanners } from "../lib/firestoreFetch";
 
-interface Props {
-  products: IProduct[];
-  bannerData: IBanner[];
-}
+const Home = () => {
+  const [products, setProducts] = useState<IProduct[]>([]);
+  const [bannerData, setBannerData] = useState<IBanner[]>([]);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [productsData, bannersData] = await Promise.all([
+          fetchProducts(),
+          fetchBanners()
+        ]);
+        setProducts(productsData);
+        setBannerData(bannersData);
+        // console.log("Products data from Firestore:", bannersData); // Kiểm tra dữ liệu
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-const Home = ({ products, bannerData }: Props) => {
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
   return (
     <>
       <HeroBanner heroBanner={bannerData && bannerData[0]} />
@@ -27,16 +55,16 @@ const Home = ({ products, bannerData }: Props) => {
   );
 };
 
-export const getServerSideProps = async () => {
-  const query = '*[_type == "product"]';
-  const products = await client.fetch(query);
+// export const getServerSideProps = async () => {
+//   const query = '*[_type == "product"]';
+//   const products = await client.fetch(query);
 
-  const bannerQuery = '*[_type == "banner"]';
-  const bannerData = await client.fetch(bannerQuery);
+//   const bannerQuery = '*[_type == "banner"]';
+//   const bannerData = await client.fetch(bannerQuery);
 
-  return {
-    props: { products, bannerData },
-  };
-};
+//   return {
+//     props: { products, bannerData },
+//   };
+// };
 
 export default Home;
