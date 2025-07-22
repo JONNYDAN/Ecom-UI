@@ -8,6 +8,7 @@ import { AccountContext } from "./accountContext";
 type LoginRegisterModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  onLoginSuccess: () => void;
 };
 
 const backdropVariants = {
@@ -34,6 +35,7 @@ const expandingTransition = {
 export default function LoginRegisterModal({
   isOpen,
   onClose,
+  onLoginSuccess
 }: LoginRegisterModalProps) {
   const [isExpanded, setExpanded] = useState(false);
   const [active, setActive] = useState<"login" | "register">("login");
@@ -110,7 +112,7 @@ export default function LoginRegisterModal({
             )}
           </div>
           <div className="login-modal-inner-container">
-            {active === "login" && <LoginForm />}
+            {active === "login" && <LoginForm onLoginSuccess={onLoginSuccess} />}
             {active === "register" && <RegisterForm />}
           </div>
         </div>
