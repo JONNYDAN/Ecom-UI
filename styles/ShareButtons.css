@@ -29,6 +29,7 @@
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s;
+  margin-top: 30px;
 }
 
 .fb-share-btn:hover {
@@ -43,4 +44,20 @@
 
 .share-text {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+@media screen and (min-width: 350px) {
+  .fb-share-btn {
+    padding: 12px 16px;
+  }
+  .share-icon {
+    margin-right: 10px;
+  }
+  .share-icon svg{
+    width: 20px;
+    height: 20px;
+  }
+  .share-text {
+    font-size: 18px;
+  }
 }

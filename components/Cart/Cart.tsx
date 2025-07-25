@@ -33,7 +33,7 @@ const Cart = (props: Props) => {
 
   return (
     <div className="cart-wrapper" ref={cartRef}>
-      <div className="cart-container">
+      <div className="cart-container px-2 py-4 w-screen sm:w-[600px]">
         <button
           type="button"
           className="cart-heading"
@@ -45,7 +45,7 @@ const Cart = (props: Props) => {
         </button>
 
         {cartItems.length < 1 && (
-          <div className="empty-cart">
+          <div className="empty-cart items-center flex flex-col">
             <AiOutlineShopping size={150} />
             <h3>Your shopping bag is empty</h3>
             <Link href="/">
@@ -63,32 +63,37 @@ const Cart = (props: Props) => {
         <div className="product-container">
           {cartItems.length >= 1 &&
             cartItems.map((item) => (
-              <div key={item._id} className="product">
-                <img
-                  src={urlFor(item?.image[0]).toString()}
-                  className="cart-product-image"
-                />
-                <div className="item-desc">
-                  <div className="flex top">
-                    <h5>{item.name}</h5>
-                    <h4>${item.price}</h4>
+              <div key={item._id} className="product items-center">
+                <div className="flex aspect-square w-[130px] h-[130px] sm:w-[200px] sm:h-[200px] justify-center ">
+                  <img
+                    src={urlFor(item?.image[0]).toString()}
+                    className="cart-product-image w-full h-full object-cover"
+                  />
+                </div>
+                <div className="item-desc w-full">
+                  <div className="flex top flex-col">
+                    <h5 className="font-bold text-2xl">{item.name}</h5>
+                    <h4 className="font-bold text-xl mt-2">${item.price}</h4>
                   </div>
-                  <div className="flex bottom">
+                  <div className="flex bottom w-full">
                     <div>
-                      <p className="quantity-desc">
+                      <p className="quantity-desc flex-row flex m-0 ">
                         <span
-                          className="minus"
+                          className="minus px-2 self-center sm:px-4 sm:py-3 md:px-3 md:py-2"
                           onClick={() =>
                             toggleCartItemQuantity(item._id, "dec")
                           }
                         >
                           <AiOutlineMinus />
                         </span>
-                        <span className="num" onClick={() => {}}>
+                        <span
+                          className="num px-4 py-1 self-center font-normal text-[14px] xs:text-[16px] sm:text-[20px] sm:px-6 sm:py-3 md:text-[18px] md:px-4 md:py-2"
+                          onClick={() => {}}
+                        >
                           {item.quantity}
                         </span>
                         <span
-                          className="plus"
+                          className="plus px-2 self-center sm:px-4 sm:py-3 md:px-3 md:py-2"
                           onClick={() =>
                             toggleCartItemQuantity(item._id, "inc")
                           }
