@@ -9,6 +9,7 @@ import { auth } from "../../lib/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../lib/firebase";
+import AvatarDropdown from "../Dropdown";
 
 type Props = {};
 
@@ -42,8 +43,8 @@ const Navbar = (props: Props) => {
   };
 
   return (
-    <div className="navbar-container">
-      <p className="logo">
+    <div className="navbar-container m-4">
+      <p className="logo whitespace-nowrap">
         <Link href="/">E-commerce</Link>
       </p>
 
@@ -66,14 +67,12 @@ const Navbar = (props: Props) => {
           </button>
         ) : (
           <div className="navbar-profile">
-            <img 
-              src={userData?.avatar} 
-              alt="User Avatar" 
-              className="user-avatar"
-            />
-            <button className="logout-btn" onClick={handleLogout}>
-              <FaSignOutAlt className="logout-icon" />
-            </button>
+            <div className="navbar-profile flex items-center gap-3">
+              <AvatarDropdown
+                avatarUrl={userData?.avatar || "/default-avatar.png"}
+                onLogout={handleLogout}
+              />
+            </div>
           </div>
         )}
       </div>
@@ -89,21 +88,21 @@ const Navbar = (props: Props) => {
       {showCart && <Cart />}
 
       <style jsx>{`
-        
         .logo a {
           font-size: 1.5rem;
           font-weight: bold;
           color: #333;
           text-decoration: none;
         }
-        
+
         .navbar-icons {
           display: flex;
           align-items: center;
           gap: 1.5rem;
         }
-        
-        .cart-icon, .user-icon {
+
+        .cart-icon,
+        .user-icon {
           position: relative;
           background: none;
           border: none;
@@ -112,12 +111,13 @@ const Navbar = (props: Props) => {
           cursor: pointer;
           transition: all 0.3s ease;
         }
-        
-        .cart-icon:hover, .user-icon:hover {
+
+        .cart-icon:hover,
+        .user-icon:hover {
           color: #0070f3;
           transform: translateY(-2px);
         }
-        
+
         .cart-item-qty {
           position: absolute;
           top: -8px;
@@ -132,13 +132,13 @@ const Navbar = (props: Props) => {
           align-items: center;
           font-size: 0.75rem;
         }
-        
+
         .navbar-profile {
           display: flex;
           align-items: center;
           gap: 1rem;
         }
-        
+
         .user-avatar {
           width: 32px;
           height: 32px;
@@ -146,7 +146,7 @@ const Navbar = (props: Props) => {
           object-fit: cover;
           border: 1px solid #ddd;
         }
-        
+
         .user-email {
           font-size: 0.9rem;
           color: #555;
@@ -155,7 +155,7 @@ const Navbar = (props: Props) => {
           text-overflow: ellipsis;
           white-space: nowrap;
         }
-        
+
         .logout-btn {
           display: flex;
           align-items: center;
@@ -168,17 +168,17 @@ const Navbar = (props: Props) => {
           cursor: pointer;
           transition: all 0.3s ease;
         }
-        
+
         .logout-btn:hover {
           background: #f5f5f5;
           border-color: #bbb;
           color: #333;
         }
-        
+
         .logout-icon {
           transition: transform 0.3s ease;
         }
-        
+
         .logout-btn:hover .logout-icon {
           transform: translateX(2px);
         }

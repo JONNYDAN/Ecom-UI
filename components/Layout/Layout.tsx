@@ -8,7 +8,7 @@ interface Props {
 
 const Layout = (props: Props) => {
   return (
-    <div className="layout">
+    <div className="layout p-0 sm:px-2.5">
       <Head>
         <title>E-commerce</title>
       </Head>
