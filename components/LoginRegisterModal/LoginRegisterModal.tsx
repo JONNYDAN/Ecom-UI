@@ -13,13 +13,13 @@ type LoginRegisterModalProps = {
 
 const backdropVariants = {
   expanded: {
-    width: "233%",
-    height: "1050px",
+    width: "400%",
+    height: "1500px",
     borderRadius: "20%",
     transform: "rotate(60deg)",
   },
   collapsed: {
-    width: "160%",
+    width: "180%",
     height: "550px",
     borderRadius: "50%",
     transform: "rotate(60deg)",
@@ -80,13 +80,13 @@ export default function LoginRegisterModal({
   return (
     <AccountContext.Provider value={contextValue}>
       <div className="login-modal-overlay">
-        <div className="modal-box-container">
+        <div className="modal-box-container w-full h-full rounded-none xs:w-[300px] xs:h-[550px] xs:rounded-2xl lg:w-[350px]">
           <button className="login-modal-close-button" onClick={onClose}>
             &times;
           </button>
-          <div className="login-modal-top-container">
+          <div className="login-modal-top-container px-[30px] pt-0 pb-[4em] xs:px-[2.5em]">
             <motion.div
-              className="login-modal-back-drop"
+              className="login-modal-back-drop top-[-370px] left-[-185px] xs:top-[-350px] xs:left-[-150px] lg:top-[-380px] lg:left-[-190px]"
               initial={false}
               animate={isExpanded ? "expanded" : "collapsed"}
               variants={backdropVariants}
@@ -94,18 +94,18 @@ export default function LoginRegisterModal({
             />
             {active === "login" && (
               <div className="login-modal-header-container">
-                <div className="login-modal-header-text">Welcome</div>
-                <div className="login-modal-header-text">Back</div>
-                <div className="login-modal-small-text">
+                <div className="login-modal-header-text text-[23px] xs:text-[25px]">Welcome</div>
+                <div className="login-modal-header-text text-[23px] xs:text-[25px]">Back</div>
+                <div className="login-modal-small-text text-[11px] xs:text-[12px]">
                   Please login to continue!
                 </div>
               </div>
             )}
             {active === "register" && (
               <div className="login-modal-header-container">
-                <div className="login-modal-header-text">Create</div>
-                <div className="login-modal-header-text">Account</div>
-                <div className="login-modal-small-text">
+                <div className="login-modal-header-text text-[23px] xs:text-[25px]">Create</div>
+                <div className="login-modal-header-text text-[23px] xs:text-[25px]">Account</div>
+                <div className="login-modal-small-text text-[11px] xs:text-[12px]">
                   Please sign up to continue!
                 </div>
               </div>
