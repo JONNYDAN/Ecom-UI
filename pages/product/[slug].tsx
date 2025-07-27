@@ -89,28 +89,6 @@ export default function ProductDetails({ product, openGraphData }: {
           cardType: 'summary_large_image',
         }}
       />
-      <Head>
-        {/* Meta chuẩn */}
-        <title>{openGraphData.title}</title>
-        <meta name="description" content={openGraphData.description} />
-
-        {/* Open Graph */}
-        <meta property="og:title" content={openGraphData.title} />
-        <meta property="og:description" content={openGraphData.description} />
-        <meta property="og:image" content={openGraphData.imageUrl} />
-        <meta property="og:url" content={openGraphData.url} />
-        <meta property="og:type" content="product" />
-        <meta property="og:site_name" content="Ecommerce" />
-        <meta property="og:locale" content="en_US" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={openGraphData.title} />
-        <meta name="twitter:description" content={openGraphData.description} />
-        <meta name="twitter:image" content={openGraphData.imageUrl} />
-      </Head>
       <div className="product-detail-container justify-center px-2.5 py-0 xs:p-0 flex-wrap md:flex-nowrap lg:mx-10 lg:justify-start">
         <div>
           <div className="image-container justify-center flex aspect-square w-[250px] h-[250px] xs:w-[310px] xs:h-[310px] sm:w-[500px] sm:h-[500px] md:w-[380px] md:h-[380px] lg:w-[500px] lg:h-[500px]">
