@@ -61,12 +61,13 @@ const ProductDetails = ({ product }: any) => {
           content={`Discover ${name} - ${details}. High-quality product at $${price}. ${description.substring(0, 100)}... Free shipping available. Shop now!`} 
         />
         <meta property="og:title" content={name} />
-        <meta 
-          property="og:image" 
-          content="https://cdn.sanity.io/images/hon77rsr/production/a64b345016e96adfb8849af5521c8e0ecfe8f027-555x555.webp"
+        <meta
+          property="og:image"
+          content={images[0]}
         />
-        <meta property="og:image:width" content="200" />
-        <meta property="og:image:height" content="200" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content={name} />
         <meta
           property="og:url"
           content={`https://ecom-ui-liart.vercel.app/product/${product.slug.current}`}
@@ -77,7 +78,7 @@ const ProductDetails = ({ product }: any) => {
         <div>
           <div className="image-container justify-center flex aspect-square w-[250px] h-[250px] xs:w-[310px] xs:h-[310px] sm:w-[500px] sm:h-[500px] md:w-[380px] md:h-[380px] lg:w-[500px] lg:h-[500px]">
             <img
-              src={urlFor(images[index]).toString()}
+              src={images[index]}
               className="product-detail-image w-full h-full object-cover"
               alt={`${name} - Main product view`} 
             />
@@ -86,7 +87,7 @@ const ProductDetails = ({ product }: any) => {
             {images?.map((item: any, i: number) => (
               <img
                 key={i}
-                src={urlFor(item).toString()}
+                src={item}
                 className={
                   i === index
                     ? "small-image selected-image w-[55px] h-[55px] xs:w-[70px] xs:h-[70px] sm:w-[117px] sm:h-[117px] md:w-[85px] md:h-[85px] lg:w-[115px] lg:h-[115px]"
@@ -167,9 +168,7 @@ const ProductDetails = ({ product }: any) => {
           <ShareButtons
             name={name}
             details={description}
-            image={urlFor(images[0])
-              .width(200)
-              .url()} // hình nhỏ
+            image={images[0]} // hình nhỏ
             url={`https://ecom-ui-liart.vercel.app/product/${product.slug.current}`}
           />
 
