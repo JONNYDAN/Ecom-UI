@@ -1,0 +1,21 @@
+User-agent: *
+
+Disallow: /admin/
+Disallow: /login/
+Disallow: /register/
+Disallow: /cart/
+Disallow: /checkout/
+Disallow: /search
+
+Allow: /
+
+Disallow: /*.php$
+Disallow: /*.cgi$
+Disallow: /*.json$
+
+Disallow: /*?*
+Disallow: /*&*
+
+# Crawl-delay: 10
+
+Sitemap: https://yourdomain.com/sitemap.xml //deploy lên thì thay yourdomain.com

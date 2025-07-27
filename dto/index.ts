@@ -1,19 +1,24 @@
 export interface IProduct {
   _id: string;
-  image: any;
+  _createdAt?: string;
+  _updatedAt?: string;
+  _rev?: string;
+  _type: 'product';
+  images: string[]; // Thay đổi từ image sang images và luôn là mảng
   name: string;
   slug: {
+    _type: 'slug';
     current: string;
   };
   price: number;
-  quantity: number;
   details: string;
-  description: string;
+  description?: string;
+  quantity?: number; // Thêm vào nếu cần
 }
 
 export interface IBanner {
   _id: string;
-  image: any;
+  images: string[];
   buttonText: string;
   product: string;
   desc: string;
