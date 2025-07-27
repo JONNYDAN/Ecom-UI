@@ -55,24 +55,14 @@ const ProductDetails = ({ product }: any) => {
   return (
     <div>
       <Head>
-        <title>{name}</title>
-        <meta 
-          name="og:description" 
-          content={`Discover ${name} - ${details}. High-quality product at $${price}. ${description.substring(0, 100)}... Free shipping available. Shop now!`} 
-        />
-        <meta property="og:title" content={name} />
-        <meta
-          property="og:image"
-          content={images[0]}
-        />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content={name} />
-        <meta
-          property="og:url"
-          content={`https://ecom-ui-liart.vercel.app/product/${product.slug.current}`}
-        />
+        <meta property="og:url" content="https://ecom-ui-liart.vercel.app/product/speaker" />
         <meta property="og:type" content="product" />
+        <meta property="og:title" content="Tên Sản Phẩm - Thương Hiệu" />
+        <meta property="og:description" content="Mô tả ngắn về sản phẩm" />
+        <meta property="og:image" content="https://cdn.sanity.io/images/hon77rsr/production/a64b345016e96adfb8849af5521c8e0ecfe8f027-555x555.webp" />
+        <meta property="og:image:width" content="555" />
+        <meta property="og:image:height" content="555" />
+        <meta property="og:image:alt" content="Mô tả ảnh sản phẩm" />
       </Head>
       <div className="product-detail-container justify-center px-2.5 py-0 xs:p-0 flex-wrap md:flex-nowrap lg:mx-10 lg:justify-start">
         <div>
