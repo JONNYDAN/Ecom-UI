@@ -15,10 +15,30 @@ import PaymentModal from "../../components/PaymentModal";
 import { IProduct } from "../../dto";
 import { fetchProducts, fetchBanners } from "../../lib/firestoreFetch";
 
-const ProductDetails = ({ product }: { product: IProduct }) => {
+const ProductDetails = ({ product, openGraphData }: { 
+  product: IProduct, 
+  openGraphData?: {
+    title: string;
+    description: string;
+    imageUrl: string;
+    url: string;
+  }
+}) => {
+  // Thêm kiểm tra dữ liệu
+  if (!product) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="text-red-500">Product not found</div>
+      </div>
+    );
+  }
+  // Sử dụng openGraphData hoặc fallback
+  const { images, name, details, price, description } = product;
+  const metaTitle = openGraphData?.title || `${name} | Your Store`;
+  const metaImage = openGraphData?.imageUrl || urlFor(images[0]).width(1200).height(630).url();
+
   const [products, setProducts] = useState<IProduct[]>([]);
 
-  const { images, name, details, price, description } = product;
   const [index, setIndex] = useState(0);
   const { decreaseQty, increaseQty, qty, onAdd } = useStateContext();
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -53,24 +73,17 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
   return (
     <div>
       <Head>
-        <title>{name}</title>
-        <meta 
-          name="description" 
-          content={`Discover ${name} - ${details}. High-quality product at $${price}. ${description}... Free shipping available. Shop now!`} 
-        />
-        <meta property="og:title" content={name} />
-        <meta property="og:description" content={description} />
-        <meta
-          property="og:image"
-          content={urlFor(images[0])
-            .width(200)
-            .url()}
-        />
-        <meta
-          property="og:url"
-          content={`https://ecom-ui-liart.vercel.app/product/${product.slug.current}`}
-        />
+        <title>{metaTitle}</title>
+        <meta name="description" content={openGraphData?.description || description} />
+        
+        {/* Open Graph Tags */}
+        <meta property="og:title" content={metaTitle} />
+        <meta property="og:description" content={openGraphData?.description || description} />
+        <meta property="og:image" content={metaImage} />
+        <meta property="og:url" content={openGraphData?.url || `https://ecom-ui-liart.vercel.app/product/${product.slug.current}`} />
         <meta property="og:type" content="product" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
       </Head>
       <div className="product-detail-container justify-center px-2.5 py-0 xs:p-0 flex-wrap md:flex-nowrap lg:mx-10 lg:justify-start">
         <div>
@@ -418,16 +431,35 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
 // };
 
 export const getServerSideProps = async ({ params }: any) => {
-  const products = await fetchProducts();
-  const product = products.find((item: IProduct) => item.slug.current === params.slug);
+  try {
+    const products = await fetchProducts();
+    const product = products.find((item: IProduct) => item.slug.current === params.slug);
 
-  console.log("Fetched product:", product); // Kiểm tra dữ liệu sản phẩm
-  return {
-    props: { product},
-    revalidate: 10, // Revalidate every 10 seconds
-  };
+    if (!product) {
+      return { notFound: true };
+    }
+
+    // Tạo openGraphData để đảm bảo Facebook hiển thị đúng
+    const optimizedImageUrl = urlFor(product.images[0])
+      .width(1200)
+      .height(630)
+      .url();
+
+    return {
+      props: { 
+        product,
+        openGraphData: {
+          title: `${product.name} | Your Store`,
+          description: product.description,
+          imageUrl: optimizedImageUrl,
+          url: `https://ecom-ui-liart.vercel.app/product/${product.slug.current}`
+        }
+      }
+    };
+  } catch (error) {
+    console.error("Error fetching product:", error);
+    return { notFound: true };
+  }
 };
-
-
 
 export default ProductDetails;
