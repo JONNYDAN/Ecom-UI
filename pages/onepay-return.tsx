@@ -132,7 +132,7 @@ const OnepayReturn = () => {
         </div>
       )}
       
-      <style jsx>{`
+      {/* <style jsx>{`
         .container {
           max-width: 800px;
           margin: 2rem auto;
@@ -164,7 +164,7 @@ const OnepayReturn = () => {
           background: #fff8e1;
           border-radius: 4px;
         }
-      `}</style>
+      `}</style> */}
     </div>
   );
 };

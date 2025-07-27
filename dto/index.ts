@@ -8,6 +8,7 @@ export interface IProduct {
   price: number;
   quantity: number;
   details: string;
+  description: string;
 }
 
 export interface IBanner {

@@ -18,7 +18,7 @@ import { fetchProducts, fetchBanners } from "../../lib/firestoreFetch";
 const ProductDetails = ({ product }: any) => {
   const [products, setProducts] = useState<IProduct[]>([]);
 
-  const { image, name, details, price } = product;
+  const { image, name, details, price, description } = product;
   const [index, setIndex] = useState(0);
   const { decreaseQty, increaseQty, qty, onAdd } = useStateContext();
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -40,6 +40,8 @@ const ProductDetails = ({ product }: any) => {
     fetchData();
   }, []);
 
+  console.log("Product details:", product); // Kiểm tra dữ liệu sản phẩm
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -53,7 +55,7 @@ const ProductDetails = ({ product }: any) => {
       <Head>
         <title>{name}</title>
         <meta property="og:title" content={name} />
-        <meta property="og:description" content={details} />
+        <meta property="og:description" content={description} />
         <meta
           property="og:image"
           content={urlFor(image && image[0])
@@ -62,7 +64,7 @@ const ProductDetails = ({ product }: any) => {
         />
         <meta
           property="og:url"
-          content={`http://sheetnhac.com/product/${product.slug.current}`}
+          content={`http://sheetmob.net/product/${product.slug.current}`}
         />
         <meta property="og:type" content="product" />
       </Head>
@@ -107,10 +109,13 @@ const ProductDetails = ({ product }: any) => {
             <p>(20)</p>
           </div>
           <h4 className="font-bold text-[16px] xs:text-[18px] sm:text-[24px] md:text-[20px] lg:text-[20px]">
-            Details:{" "}
+            Details:
+            <p className="text-[14px] xs:text-[16px] sm:text-[20px] md:text-[16px] lg:text-[17px]">
+              {details}
+            </p>
           </h4>
           <p className="text-[14px] xs:text-[16px] sm:text-[20px] md:text-[16px] lg:text-[17px]">
-            {details}
+            {product.description}
           </p>
 
           <p className="price text-[26px] xs:text-[28px] sm:text-[30px] md:text-[28px] lg:text-[32px]">
@@ -144,11 +149,11 @@ const ProductDetails = ({ product }: any) => {
           </div>
           <ShareButtons
             name={name}
-            details={details}
+            details={description}
             image={urlFor(image && image[0])
               .width(200)
               .url()} // hình nhỏ
-            url={`http://sheetnhac.com/product/${product.slug.current}`}
+            url={`http://sheetmob.net/product/${product.slug.current}`}
           />
 
           <div className="buttons">
