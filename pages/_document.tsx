@@ -1,4 +1,5 @@
 import { Html, Head, Main, NextScript } from 'next/document'
+import Script from 'next/script'
 
 export default function Document() {
   return (
@@ -31,27 +32,31 @@ export default function Document() {
         }} />
         {/* Messenger Chat Plugin */}
         <div id="fb-root"></div>
-        <div id="fb-customer-chat" className="fb-customerchat"></div>
-        <script dangerouslySetInnerHTML={{
-          __html: `
-            var chatbox = document.getElementById('fb-customer-chat');
-            chatbox.setAttribute("page_id", "61578326255422");
-            chatbox.setAttribute("attribution", "biz_inbox");
+        <div
+          className="fb-customerchat"
+          data-attribution="setup_tool"
+          data-page_id="61578326255422"
+          data-theme_color="#0084ff"
+          data-logged_in_greeting="Xin chào! Chúng tôi có thể giúp gì cho bạn?"
+          data-logged_out_greeting="Xin chào! Chúng tôi có thể giúp gì cho bạn?"
+        ></div>
+        <Script id="facebook-customerchat" strategy="afterInteractive">
+          {`
             window.fbAsyncInit = function() {
               FB.init({
-                xfbml            : true,
-                version          : 'v18.0'
+                xfbml: true,
+                version: 'v12.0'
               });
             };
             (function(d, s, id) {
               var js, fjs = d.getElementsByTagName(s)[0];
               if (d.getElementById(id)) return;
               js = d.createElement(s); js.id = id;
-              js.src = "https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js";
+              js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
               fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
-          `
-        }} />
+          `}
+        </Script>
       </body>
     </Html>
   )
