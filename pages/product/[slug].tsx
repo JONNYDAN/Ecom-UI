@@ -151,7 +151,7 @@ const ProductDetails = ({ product }: any) => {
             <section className="care-instructions bg-gray-50 p-8 rounded-xl mb-8">
               <h3 className="text-2xl font-bold mb-6 text-gray-900">Complete Care & Maintenance Guide</h3>
               <div className="prose lg:prose-lg">
-                <p className="mb-6">Proper care will maintain your {name}'s beauty and functionality for years to come. Follow these professional recommendations:</p>
+                <p className="mb-6">Proper care will maintain your {name} beauty and functionality for years to come. Follow these professional recommendations:</p>
                 
                 <h4 className="text-xl font-semibold mb-3">Daily Maintenance</h4>
                 <ul className="list-disc pl-6 space-y-2 mb-6">
@@ -198,7 +198,7 @@ const ProductDetails = ({ product }: any) => {
                   <li>Living wages for all craftspeople</li>
                   <li>Zero-waste production processes</li>
                 </ul>
-                <p className="mt-4">When you choose {name}, you're investing in more than a product - you're supporting sustainable craftsmanship and helping preserve skills that might otherwise disappear.</p>
+                <p className="mt-4">When you choose {name}, you are investing in more than a product - you are supporting sustainable craftsmanship and helping preserve skills that might otherwise disappear.</p>
               </div>
             </section>
           </div>
