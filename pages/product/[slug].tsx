@@ -68,7 +68,7 @@ const ProductDetails = ({ product }: any) => {
         />
         <meta
           property="og:url"
-          content={`https://ecom-ui-2o1f.vercel.app/product/${product.slug.current}`}
+          content={`https://ecom-ui-liart.vercel.app/product/${product.slug.current}`}
         />
         <meta property="og:type" content="product" />
       </Head>
@@ -169,7 +169,7 @@ const ProductDetails = ({ product }: any) => {
             image={urlFor(images[0])
               .width(200)
               .url()} // hình nhỏ
-            url={`https://ecom-ui-2o1f.vercel.app/${product.slug.current}`}
+            url={`https://ecom-ui-liart.vercel.app/${product.slug.current}`}
           />
 
           <div className="buttons">
