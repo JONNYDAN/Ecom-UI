@@ -5,10 +5,36 @@ const nextConfig = {
   images: {
     domains: ['cdn.sanity.io'],
   },
-  env: {
-    SITE_URL: process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}` 
-      : 'http://localhost:3000',
+  async headers() {
+    return [
+      {
+        source: '/product/:slug*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, max-age=0'
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'ALLOW-FROM https://www.facebook.com'
+          },
+          {
+            key: 'Content-Security-Policy',
+            value: "frame-ancestors 'self' https://www.facebook.com"
+          }
+        ]
+      },
+      // Áp dụng cho toàn site
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff'
+          }
+        ]
+      }
+    ]
   },
 }
 

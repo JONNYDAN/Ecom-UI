@@ -64,19 +64,18 @@ export default function ProductDetails({ product, openGraphData }: {
         <title>{openGraphData.title}</title>
         <meta name="description" content={openGraphData.description} />
         
-        {/* Open Graph Meta Tags */}
-        <meta property="og:title" content={openGraphData.title} />
-        <meta property="og:description" content={openGraphData.description} />
-        <meta property="og:image" content={openGraphData.imageUrl} />
-        <meta property="og:url" content={openGraphData.url} />
-        <meta property="og:type" content="product" />
-        <meta property="og:site_name" content="Your Store Name" />
+        {/* Open Graph */}
+        <meta property="og:title" content={openGraphData.title} key="ogtitle" />
+        <meta property="og:description" content={openGraphData.description} key="ogdesc" />
+        <meta property="og:image" content={openGraphData.imageUrl} key="ogimage" />
+        <meta property="og:url" content={openGraphData.url} key="ogurl" />
+        <meta property="og:type" content="product" key="ogtype" />
         
-        {/* Twitter Card Meta Tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={openGraphData.title} />
-        <meta name="twitter:description" content={openGraphData.description} />
-        <meta name="twitter:image" content={openGraphData.imageUrl} />
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" key="twcard" />
+        <meta name="twitter:title" content={openGraphData.title} key="twtitle" />
+        <meta name="twitter:description" content={openGraphData.description} key="twdesc" />
+        <meta name="twitter:image" content={openGraphData.imageUrl} key="twimage" />
       </Head>
       <div className="product-detail-container justify-center px-2.5 py-0 xs:p-0 flex-wrap md:flex-nowrap lg:mx-10 lg:justify-start">
         <div>
@@ -175,7 +174,8 @@ export default function ProductDetails({ product, openGraphData }: {
             image={urlFor(images[0])
               .width(200)
               .url()} // hình nhỏ
-            url={`https://ecom-ui-2o1f.vercel.app/product/${product.slug.current}`}
+            url={`https://ecom-ui-liart.vercel.app/product/${product.slug.current}`}
+
           />
 
           <div className="buttons">
@@ -442,7 +442,7 @@ export async function getServerSideProps({ params }: any){
       props: { 
         product,
         openGraphData: {
-          title: `${product.name} | Your Store`,
+          title: `${product.name} | Ecommerce`,
           description: product.description,
           imageUrl: optimizedImageUrl,
           url: `https://ecom-ui-liart.vercel.app/product/${product.slug.current}`
