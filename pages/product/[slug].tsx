@@ -15,7 +15,7 @@ import PaymentModal from "../../components/PaymentModal";
 import { IProduct } from "../../dto";
 import { fetchProducts, fetchBanners } from "../../lib/firestoreFetch";
 
-const ProductDetails = ({ product }: { product: IProduct }) => {
+export default function ProductDetails({ product }: { product: IProduct }){
   const [products, setProducts] = useState<IProduct[]>([]);
 
   const { images, name, details, price, description } = product;
@@ -417,7 +417,7 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
 //   return { paths, fallback: 'blocking' };
 // };
 
-export const getServerSideProps = async ({ params }: any) => {
+export async function getServerSideProps({ params }: any){
   try {
     const products = await fetchProducts();
     const product = products.find((item: IProduct) => item.slug.current === params.slug);
@@ -448,5 +448,3 @@ export const getServerSideProps = async ({ params }: any) => {
     return { notFound: true };
   }
 };
-
-export default ProductDetails;
