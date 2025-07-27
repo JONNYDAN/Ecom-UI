@@ -63,9 +63,9 @@ const ProductDetails = ({ product }: any) => {
         <meta property="og:title" content={name} />
         <meta
           property="og:image"
-          content={urlFor(images[0])
+          content={`${urlFor(images[0])
             .width(200)
-            .url()}
+            .url()}?fit=crop&format=jpg`}
         />
         <meta
           property="og:url"
