@@ -15,7 +15,7 @@ import PaymentModal from "../../components/PaymentModal";
 import { IProduct } from "../../dto";
 import { fetchProducts, fetchBanners } from "../../lib/firestoreFetch";
 
-const ProductDetails = ({ product, openGraphData }: { product: IProduct, openGraphData: any }) => {
+const ProductDetails = ({ product }: { product: IProduct }) => {
   const [products, setProducts] = useState<IProduct[]>([]);
 
   const { images, name, details, price, description } = product;
@@ -53,23 +53,24 @@ const ProductDetails = ({ product, openGraphData }: { product: IProduct, openGra
   return (
     <div>
       <Head>
-        <title>{openGraphData.title}</title>
-        <meta name="description" content={openGraphData.description} />
-        
-        {/* Open Graph Meta Tags */}
-        <meta property="og:title" content={openGraphData.title} />
-        <meta property="og:description" content={openGraphData.description} />
-        <meta property="og:image" content={openGraphData.imageUrl} />
-        <meta property="og:url" content={openGraphData.url} />
+        <title>{name}</title>
+        <meta 
+          name="description" 
+          content={`Discover ${name} - ${details}. High-quality product at $${price}. ${description}... Free shipping available. Shop now!`} 
+        />
+        <meta property="og:title" content={name} />
+        <meta property="og:description" content={description} />
+        <meta
+          property="og:image"
+          content={urlFor(images[0])
+            .width(200)
+            .url()}
+        />
+        <meta
+          property="og:url"
+          content={`https://ecom-ui-liart.vercel.app/product/${product.slug.current}`}
+        />
         <meta property="og:type" content="product" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={openGraphData.title} />
-        <meta name="twitter:description" content={openGraphData.description} />
-        <meta name="twitter:image" content={openGraphData.imageUrl} />
       </Head>
       <div className="product-detail-container justify-center px-2.5 py-0 xs:p-0 flex-wrap md:flex-nowrap lg:mx-10 lg:justify-start">
         <div>
@@ -407,44 +408,26 @@ const ProductDetails = ({ product, openGraphData }: { product: IProduct, openGra
   );
 };
 
-export const getStaticPaths = async () => {
-  const products = await fetchProducts();
-  const paths = products.map((product: IProduct) => ({
-    params: { slug: product.slug.current },
-  }));
+// export const getStaticPaths = async () => {
+//   const products = await fetchProducts();
+//   const paths = products.map((product: IProduct) => ({
+//     params: { slug: product.slug.current },
+//   }));
 
-  return { paths, fallback: 'blocking' };
-};
+//   return { paths, fallback: 'blocking' };
+// };
 
-export const getStaticProps = async ({ params }: any) => {
+export const getServerSideProps = async ({ params }: any) => {
   const products = await fetchProducts();
   const product = products.find((item: IProduct) => item.slug.current === params.slug);
 
-  if (!product) {
-    return {
-      notFound: true,
-    };
-  }
-
-  // Tạo URL ảnh với kích thước tối ưu cho social sharing
-  const optimizedImageUrl = urlFor(product.images[0])
-    .width(1200)
-    .height(630)
-    .url();
-
+  console.log("Fetched product:", product); // Kiểm tra dữ liệu sản phẩm
   return {
-    props: { 
-      product,
-      openGraphData: {
-        title: `${product.name} | Ecommerce`,
-        description: product.description,
-        imageUrl: optimizedImageUrl,
-        url: `https://ecom-ui-liart.vercel.app/product/${product.slug.current}`
-      }
-    },
-    revalidate: 60, // Tăng thời gian revalidate
+    props: { product},
+    revalidate: 10, // Revalidate every 10 seconds
   };
 };
+
 
 
 export default ProductDetails;
