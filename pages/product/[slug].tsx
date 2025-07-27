@@ -50,16 +50,17 @@ const ProductDetails = ({ product }: any) => {
     );
   }
 
+  console.log("img", images[0]); // Kiểm tra hình ảnh
+
   return (
     <div>
       <Head>
         <title>{name}</title>
         <meta 
-          name="description" 
+          name="og:description" 
           content={`Discover ${name} - ${details}. High-quality product at $${price}. ${description.substring(0, 100)}... Free shipping available. Shop now!`} 
         />
         <meta property="og:title" content={name} />
-        <meta property="og:description" content={description} />
         <meta
           property="og:image"
           content={urlFor(images[0])
@@ -169,7 +170,7 @@ const ProductDetails = ({ product }: any) => {
             image={urlFor(images[0])
               .width(200)
               .url()} // hình nhỏ
-            url={`https://ecom-ui-liart.vercel.app/${product.slug.current}`}
+            url={`https://ecom-ui-liart.vercel.app/product/${product.slug.current}`}
           />
 
           <div className="buttons">
