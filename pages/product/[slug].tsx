@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { NextSeo } from 'next-seo';
 import { urlFor } from "../../lib/client";
 import {
   AiOutlineMinus,
@@ -66,7 +67,28 @@ export default function ProductDetails({ product, openGraphData }: {
   }
 
   return (
-    <div>
+    <>
+      <NextSeo
+        title={openGraphData.title}
+        description={openGraphData.description}
+        openGraph={{
+          url: openGraphData.url,
+          title: openGraphData.title,
+          description: openGraphData.description,
+          images: [
+            {
+              url: openGraphData.imageUrl,
+              width: 1200,
+              height: 630,
+              alt: product.name,
+            },
+          ],
+          site_name: 'E-commerce',
+        }}
+        twitter={{
+          cardType: 'summary_large_image',
+        }}
+      />
       <Head>
         {/* Meta chuẩn */}
         <title>{openGraphData.title}</title>
@@ -422,7 +444,7 @@ export default function ProductDetails({ product, openGraphData }: {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
