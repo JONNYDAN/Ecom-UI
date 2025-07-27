@@ -24,14 +24,7 @@ const ProductDetails = ({ product, openGraphData }: {
     url: string;
   }
 }) => {
-  // Thêm kiểm tra dữ liệu
-  if (!product) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="text-red-500">Product not found</div>
-      </div>
-    );
-  }
+
   // Sử dụng openGraphData hoặc fallback
   const { images, name, details, price, description } = product;
   const metaTitle = openGraphData?.title || `${name} | Your Store`;
@@ -43,7 +36,6 @@ const ProductDetails = ({ product, openGraphData }: {
   const { decreaseQty, increaseQty, qty, onAdd } = useStateContext();
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -59,6 +51,16 @@ const ProductDetails = ({ product, openGraphData }: {
 
     fetchData();
   }, []);
+
+
+  // Thêm kiểm tra dữ liệu
+  if (!product) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="text-red-500">Product not found</div>
+      </div>
+    );
+  }
 
   // console.log("Product details:", product); // Kiểm tra dữ liệu sản phẩm
 
