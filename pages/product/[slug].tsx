@@ -61,11 +61,14 @@ const ProductDetails = ({ product }: any) => {
           content={`Discover ${name} - ${details}. High-quality product at $${price}. ${description.substring(0, 100)}... Free shipping available. Shop now!`} 
         />
         <meta property="og:title" content={name} />
-        <meta
-          property="og:image"
+        <meta 
+          property="og:image" 
           content={`${urlFor(images[0])
-            .width(200)
-            .url()}?fit=crop&format=jpg`}
+            .width(200)  // Tăng kích thước tối thiểu cho Facebook
+            .height(200)  // Tỷ lệ chuẩn 1.91:1
+            .fit('crop')  // Đảm bảo cắt ảnh đúng tỷ lệ
+            .format('jpg') // Chuyển sang JPG để tương thích tốt hơn
+            .url()}`} 
         />
         <meta
           property="og:url"
