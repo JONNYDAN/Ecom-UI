@@ -63,13 +63,10 @@ const ProductDetails = ({ product }: any) => {
         <meta property="og:title" content={name} />
         <meta 
           property="og:image" 
-          content={`${urlFor(images[0])
-            .width(1200)  // Tăng kích thước tối thiểu cho Facebook
-            .height(630)  // Tỷ lệ chuẩn 1.91:1
-            .fit('crop')  // Đảm bảo cắt ảnh đúng tỷ lệ
-            .format('jpg') // Chuyển sang JPG để tương thích tốt hơn
-            .url()}`} 
+          content="https://cdn.sanity.io/images/hon77rsr/production/a64b345016e96adfb8849af5521c8e0ecfe8f027-555x555.webp"
         />
+        <meta property="og:image:width" content="200" />
+        <meta property="og:image:height" content="200" />
         <meta
           property="og:url"
           content={`https://ecom-ui-liart.vercel.app/product/${product.slug.current}`}
