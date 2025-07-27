@@ -84,7 +84,7 @@ export function LoginForm({ onLoginSuccess }: LoginFormProps) {
       <span style={{ display: "flex", height: "1.6em" }} />
       <p className="login-modal-line-text">
         {" "}
-        Don't have an account?{" "}
+        Dont have an account?{" "}
         <a onClick={switchToRegister} className="login-modal-bold-link" href="#">
           Sign up
         </a>
