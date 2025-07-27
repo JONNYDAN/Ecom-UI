@@ -23,8 +23,10 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "lib/client.js"
-, "pages/api/stripe.js", "lib/migrateSanityToFirestore.js"  ],
+    "lib/client.js",
+    "pages/api/stripe.js",
+    "lib/migrateSanityToFirestore.js",
+    "pages/payment_test.js"  ],
   "exclude": [
     "node_modules"
   ]
