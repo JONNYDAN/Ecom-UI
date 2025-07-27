@@ -64,8 +64,8 @@ const ProductDetails = ({ product }: any) => {
         <meta 
           property="og:image" 
           content={`${urlFor(images[0])
-            .width(200)  // Tăng kích thước tối thiểu cho Facebook
-            .height(200)  // Tỷ lệ chuẩn 1.91:1
+            .width(1200)  // Tăng kích thước tối thiểu cho Facebook
+            .height(630)  // Tỷ lệ chuẩn 1.91:1
             .fit('crop')  // Đảm bảo cắt ảnh đúng tỷ lệ
             .format('jpg') // Chuyển sang JPG để tương thích tốt hơn
             .url()}`} 
