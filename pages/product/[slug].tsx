@@ -50,21 +50,33 @@ const ProductDetails = ({ product }: any) => {
     );
   }
 
-  console.log("img", images[0]); // Kiểm tra hình ảnh
-
   return (
     <div>
       <Head>
-        <meta property="og:url" content="https://ecom-ui-liart.vercel.app/product/speaker" />
+        <title>{name}</title>
+        <meta 
+          name="description" 
+          content={`Discover ${name} - ${details}. High-quality product at $${price}. ${description.substring(0, 100)}... Free shipping available. Shop now!`} 
+        />
+        <meta property="og:title" content={name} />
+        <meta property="og:description" content={description} />
+        <meta
+          property="og:image"
+          content={urlFor(images[0])
+            .width(200)
+            .url()}
+        />
+        <meta
+          property="og:url"
+          content={`https://ecom-ui-liart.vercel.app/product/${product.slug.current}`}
+        />
         <meta property="og:type" content="product" />
-        <meta property="og:title" content="Tên Sản Phẩm - Thương Hiệu" />
-        <meta property="og:description" content="Mô tả ngắn về sản phẩm" />
       </Head>
       <div className="product-detail-container justify-center px-2.5 py-0 xs:p-0 flex-wrap md:flex-nowrap lg:mx-10 lg:justify-start">
         <div>
           <div className="image-container justify-center flex aspect-square w-[250px] h-[250px] xs:w-[310px] xs:h-[310px] sm:w-[500px] sm:h-[500px] md:w-[380px] md:h-[380px] lg:w-[500px] lg:h-[500px]">
             <img
-              src={images[index]}
+              src={urlFor(images[index]).toString()}
               className="product-detail-image w-full h-full object-cover"
               alt={`${name} - Main product view`} 
             />
@@ -73,7 +85,7 @@ const ProductDetails = ({ product }: any) => {
             {images?.map((item: any, i: number) => (
               <img
                 key={i}
-                src={item}
+                src={urlFor(item).toString()}
                 className={
                   i === index
                     ? "small-image selected-image w-[55px] h-[55px] xs:w-[70px] xs:h-[70px] sm:w-[117px] sm:h-[117px] md:w-[85px] md:h-[85px] lg:w-[115px] lg:h-[115px]"
@@ -154,7 +166,9 @@ const ProductDetails = ({ product }: any) => {
           <ShareButtons
             name={name}
             details={description}
-            image={images[0]} // hình nhỏ
+            image={urlFor(images[0])
+              .width(200)
+              .url()} // hình nhỏ
             url={`https://ecom-ui-liart.vercel.app/product/${product.slug.current}`}
           />
 
@@ -408,7 +422,14 @@ export const getStaticProps = async ({ params }: any) => {
   const product = products.find((item: IProduct) => item.slug.current === params.slug);
 
   return {
-    props: { product: product || null },
+    props: { product,
+      openGraphData: {
+        title: `${product?.name} | Tên Shop`,
+        description: product?.description,
+        imageUrl: product?.images[0],
+        url: `https://ecom-ui-liart.vercel.app/product/${product?.slug.current}`
+      }
+     },
     revalidate: 10, // Revalidate every 10 seconds
   };
 };
