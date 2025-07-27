@@ -114,95 +114,26 @@ const ProductDetails = ({ product }: any) => {
             </div>
             <p>(20)</p>
           </div>
-          <div className="product-description space-y-8 max-w-3xl mx-auto text-gray-800">
-            {/* Main Product Description */}
-            <section className="mb-8">
-              <h2 className="text-3xl font-bold mb-6 text-gray-900">Complete Product Details: {name}</h2>
-              <div className="prose lg:prose-lg">
-                <p className="text-lg leading-relaxed mb-4">{description}</p>
-                <p className="text-lg leading-relaxed">This premium {name} represents the perfect combination of form and function, designed to deliver exceptional performance while enhancing your space with its elegant aesthetic. Every detail has been carefully considered by our design team to ensure maximum satisfaction.</p>
-              </div>
-            </section>
-
-            {/* Expanded Features Section */}
-            <section className="features bg-gray-50 p-8 rounded-xl mb-8">
-              <h3 className="text-2xl font-bold mb-6 text-gray-900">Detailed Features & Benefits</h3>
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <li className="bg-white p-5 rounded-lg shadow-sm">
-                  <h4 className="text-xl font-semibold mb-2">Premium Materials</h4>
-                  <p>Constructed with grade-A materials selected for their durability and aesthetic qualities. Our {name} uses sustainably-sourced components that meet rigorous quality standards.</p>
-                </li>
-                <li className="bg-white p-5 rounded-lg shadow-sm">
-                  <h4 className="text-xl font-semibold mb-2">Artisan Craftsmanship</h4>
-                  <p>Each piece is hand-finished by skilled craftsmen with 10+ years experience. The attention to detail ensures perfect seams, flawless finishes, and lasting structural integrity.</p>
-                </li>
-                <li className="bg-white p-5 rounded-lg shadow-sm">
-                  <h4 className="text-xl font-semibold mb-2">Eco-Conscious Production</h4>
-                  <p>Our manufacturing process reduces water usage by 40% compared to industry standards and utilizes solar energy. All packaging is 100% recyclable.</p>
-                </li>
-                <li className="bg-white p-5 rounded-lg shadow-sm">
-                  <h4 className="text-xl font-semibold mb-2">User-Centered Design</h4>
-                  <p>Ergonomic testing with real users informs every curve and angle. The result is unparalleled comfort that adapts to your body over time.</p>
-                </li>
-              </ul>
-            </section>
-
-            {/* Comprehensive Care Guide */}
-            <section className="care-instructions bg-gray-50 p-8 rounded-xl mb-8">
-              <h3 className="text-2xl font-bold mb-6 text-gray-900">Complete Care & Maintenance Guide</h3>
-              <div className="prose lg:prose-lg">
-                <p className="mb-6">Proper care will maintain your {name} beauty and functionality for years to come. Follow these professional recommendations:</p>
-                
-                <h4 className="text-xl font-semibold mb-3">Daily Maintenance</h4>
-                <ul className="list-disc pl-6 space-y-2 mb-6">
-                  <li>Wipe surfaces with microfiber cloth to remove dust particles that can cause micro-scratches</li>
-                  <li>Rotate or flip components weekly to ensure even wear patterns</li>
-                  <li>Check tension points monthly for proper alignment</li>
-                </ul>
-                
-                <h4 className="text-xl font-semibold mb-3">Seasonal Deep Cleaning</h4>
-                <p className="mb-3">Every 3-6 months, perform these thorough cleaning steps:</p>
-                <ul className="list-disc pl-6 space-y-2 mb-6">
-                  <li>Use pH-neutral cleaner diluted in warm (not hot) water</li>
-                  <li>Apply with soft-bristle brush in circular motions</li>
-                  <li>Rinse with damp cloth and dry immediately</li>
-                </ul>
-                
-                <h4 className="text-xl font-semibold mb-3">Long-Term Preservation</h4>
-                <ul className="list-disc pl-6 space-y-2">
-                  <li>Apply protective conditioner every 12-18 months</li>
-                  <li>Store in climate-controlled environment when not in use</li>
-                  <li>Avoid prolonged exposure to temperature extremes</li>
-                </ul>
-              </div>
-            </section>
-
-            {/* Added Value Sections */}
-            <section className="additional-info space-y-8">
-              <div className="warranty bg-blue-50 p-8 rounded-xl">
-                <h3 className="text-2xl font-bold mb-4 text-gray-900">Our Guarantee to You</h3>
-                <p className="mb-4">Every {name} comes with our industry-leading 10-year craftsmanship warranty covering:</p>
-                <ul className="list-disc pl-6 space-y-2 mb-4">
-                  <li>Structural integrity and frame stability</li>
-                  <li>Material defects and workmanship issues</li>
-                  <li>Hardware malfunctions under normal use</li>
-                </ul>
-                <p>Plus 24/7 customer support and free consultation on proper maintenance.</p>
-              </div>
-              
-              <div className="brand-story bg-gray-50 p-8 rounded-xl">
-                <h3 className="text-2xl font-bold mb-4 text-gray-900">The Story Behind {name}</h3>
-                <p className="mb-4">Founded in 2010, our workshop began with three artisans dedicated to reviving traditional techniques. Today, we combine these methods with modern technology while maintaining our commitment to:</p>
-                <ul className="list-disc pl-6 space-y-2">
-                  <li>Ethical sourcing of all materials</li>
-                  <li>Living wages for all craftspeople</li>
-                  <li>Zero-waste production processes</li>
-                </ul>
-                <p className="mt-4">When you choose {name}, you are investing in more than a product - you are supporting sustainable craftsmanship and helping preserve skills that might otherwise disappear.</p>
-              </div>
-            </section>
-          </div>
-
+          
+          {/* 1. Hero Product Introduction with Expanded Text */}
+          <section className="mb-14">
+            <h1 className="text-4xl md:text-5xl font-bold mb-8 text-gray-900 leading-tight">
+              The {name} - The Pinnacle of [Product Category] Excellence
+            </h1>
+            <div className="prose lg:prose-xl max-w-none text-gray-700">
+              <p className="text-xl leading-relaxed mb-6">
+                {description} After three years of intensive research and development, our team of master craftsmen and engineers 
+                have created what industry experts are calling the new standard in [product category]. The {name} represents 
+                over 200 precision-engineered components working in perfect harmony to deliver an unparalleled user experience.
+              </p>
+              <p className="text-xl leading-relaxed">
+                What truly sets the {name} apart is its remarkable combination of cutting-edge technology and old-world 
+                craftsmanship. Each unit undergoes 47 individual quality checks before leaving our solar-powered facility 
+                in [location]. The result is a product that looks stunning, feels extraordinary, and performs flawlessly 
+                year after year.
+              </p>
+            </div>
+          </section>
           <p className="price text-[26px] xs:text-[28px] sm:text-[30px] md:text-[28px] lg:text-[32px]">
             ${price}
           </p>
@@ -265,7 +196,204 @@ const ProductDetails = ({ product }: any) => {
           />
         </div>
       </div>
+      <div className="product-description space-y-12 max-w-6xl mx-auto px-4 text-gray-800">
 
+        {/* 2. Comprehensive Features with Technical Specifications */}
+        <section className="bg-gray-50 p-12 rounded-3xl mb-14">
+          <h2 className="text-3xl md:text-4xl font-bold mb-10 text-gray-900 border-b-2 border-gray-200 pb-6">
+            Engineering Marvel: Inside the {name}
+          </h2>
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
+            {[
+              {
+                title: "Advanced Material Composition",
+                content: [
+                  "Primary structure: Aerospace-grade [material] (0.8mm thickness)",
+                  "Surface treatment: Proprietary nano-coating (5μm layer) resistant to scratches, UV rays, and fingerprints",
+                  "Weight distribution: Computer-optimized balance (42% front / 58% rear) for perfect ergonomics",
+                  "Environmental rating: Meets ISO 14001 and RoHS standards for sustainable production"
+                ]
+              },
+              {
+                title: "Precision Manufacturing Process",
+                content: [
+                  "56-step assembly procedure supervised by master craftsmen",
+                  "Laser-aligned components accurate to within 0.01mm tolerance",
+                  "Hand-finished edges using traditional [technique] method",
+                  "72-hour stress testing under simulated 10-year use conditions"
+                ]
+              },
+              {
+                title: "User-Centric Design Features",
+                content: [
+                  "Patented [feature name] system reduces fatigue by up to 62%",
+                  "Customizable [component] with 8 adjustable positions",
+                  "Integrated [technology] for seamless connectivity",
+                  "Ambidextrous operation tested with 500+ users"
+                ]
+              },
+              {
+                title: "Sustainable Production",
+                content: [
+                  "Carbon-negative manufacturing process (removes 3kg CO₂ per unit)",
+                  "100% recycled packaging with plant-based inks",
+                  "Water usage reduced by 75% compared to industry average",
+                  "End-of-life recycling program recovers 98% of materials"
+                ]
+              }
+            ].map((feature, index) => (
+              <div key={index} className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+                <h3 className="text-2xl font-semibold mb-5 text-blue-800 flex items-center">
+                  <span className="bg-blue-100 text-blue-800 p-3 rounded-full mr-4 w-12 h-12 flex items-center justify-center">
+                    {index + 1}
+                  </span>
+                  {feature.title}
+                </h3>
+                <ul className="space-y-3">
+                  {feature.content.map((item, i) => (
+                    <li key={i} className="flex items-start">
+                      <svg className="h-5 w-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span className="text-gray-700">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 3. Ultimate Care Guide with Scientific Approach */}
+        <section className="mb-16">
+          <div className="prose lg:prose-xl max-w-none">
+            <div className="mt-12 bg-blue-50 border-l-4 border-blue-500 p-8 rounded-r-lg">
+              <h4 className="text-2xl font-semibold mb-4 text-gray-900">Materials Science Insight</h4>
+              <p>
+                Our research lab discovered that proper maintenance actually improves the {name} performance over time. 
+                The [material] undergoes a molecular realignment process when properly conditioned, increasing its 
+                tensile strength by up to 12% after 18 months of use. This patented phenomenon is called the 
+                [Scientific Name] Effect and is documented in our white paper [link].
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* 4. Warranty & Legacy Sections */}
+        <section className="space-y-14">
+          <div className="bg-blue-100 p-12 rounded-3xl">
+            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-gray-900">
+              Our Ironclad 15-Year Warranty Protection
+            </h2>
+            <div className="grid lg:grid-cols-2 gap-10">
+              <div>
+                <h3 className="text-2xl font-semibold mb-6 text-blue-800">Comprehensive Coverage</h3>
+                <ul className="space-y-4">
+                  {[
+                    "Full protection against material defects (including gradual wear)",
+                    "Complete component replacement guarantee",
+                    "Free annual tune-ups ($200 value each)",
+                    "In-home service available in 50+ countries",
+                    "Loaner program during repairs"
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start">
+                      <svg className="h-6 w-6 text-blue-600 mr-3 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span className="text-lg text-gray-700">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3 className="text-2xl font-semibold mb-6 text-blue-800">Warranty Registration Benefits</h3>
+                <ul className="space-y-4">
+                  {[
+                    "Extended 5-year coverage for registered users",
+                    "Exclusive access to master craftsman hotline",
+                    "Free digital care course ($150 value)",
+                    "Invitations to product improvement workshops",
+                    "Early access to next-generation models"
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start">
+                      <svg className="h-6 w-6 text-blue-600 mr-3 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span className="text-lg text-gray-700">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <p className="mt-10 text-lg bg-white p-6 rounded-lg border border-blue-200">
+              <strong>Note:</strong> Our warranty is transferable to future owners, maintaining 75% of remaining coverage. 
+              Proof of purchase required. Does not cover damage from improper use or unauthorized modifications. 
+              Full terms at [link].
+            </p>
+          </div>
+          
+          <div className="bg-gray-50 p-12 rounded-3xl">
+            <h2 className="text-3xl md:text-4xl font-bold mb-10 text-gray-900 border-b-2 border-gray-200 pb-6">
+              The {name} Heritage: A Legacy of Excellence
+            </h2>
+            <div className="prose lg:prose-xl max-w-none">
+              <div className="grid lg:grid-cols-2 gap-12">
+                <div>
+                  <h3 className="text-2xl font-semibold mb-6 text-gray-800">Our Craftsmanship Philosophy</h3>
+                  <p className="mb-6">
+                    Since our founding in [year] by master [craftsman name], we have adhered to three unwavering principles:
+                  </p>
+                  <ol className="space-y-6 list-decimal pl-6">
+                    <li>
+                      <strong>Perfection in Details:</strong> We measure success in millimeters - each {name} contains 
+                      17 hidden details invisible to most but essential to quality.
+                    </li>
+                    <li>
+                      <strong>Sustainable Mastery:</strong> Our apprenticeship program trains artisans for 7 years 
+                      while planting 100 trees per graduate.
+                    </li>
+                    <li>
+                      <strong>Innovation Through Tradition:</strong> We combine 18th-century [technique] with 
+                      AI-assisted precision engineering.
+                    </li>
+                  </ol>
+                </div>
+                <div>
+                  <h3 className="text-2xl font-semibold mb-6 text-gray-800">Global Impact</h3>
+                  <p className="mb-6">
+                    Your purchase supports:
+                  </p>
+                  <ul className="space-y-4">
+                    {[
+                      "The [Name] Foundation providing vocational training in developing nations",
+                      "Our carbon offset program protecting 10 square meters of rainforest per product",
+                      "The [University] Materials Science Scholarship Fund",
+                      "Local community workshops teaching traditional crafts to at-risk youth"
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start">
+                        <svg className="h-5 w-5 text-green-600 mr-3 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              <div className="mt-12 bg-white p-8 rounded-xl border border-gray-200 shadow-sm">
+                <h4 className="text-2xl font-semibold mb-4 text-gray-900">From Our Founder</h4>
+                <blockquote className="text-xl italic text-gray-700 pl-6 border-l-4 border-gray-300">
+                  The {name} represents my life work - the perfect marriage of form and function. 
+                  When you hold one, you are touching the cumulative wisdom of generations of craftsmen, 
+                  distilled into a single perfect object. We do not chase trends; we create timeless 
+                  pieces that become more valuable with each passing year.
+                  <footer className="mt-4 not-italic font-semibold text-gray-900">— [Founder Name], Founder & Master Artisan</footer>
+                </blockquote>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
       <div className="maylike-products-wrapper">
         <h2 className="font-bold">You may also like</h2>
         <div className="marquee">
@@ -294,7 +422,7 @@ export const getStaticProps = async ({ params }: any) => {
   const product = products.find((item: IProduct) => item.slug.current === params.slug);
 
   return {
-    props: { product },
+    props: { product: product || null },
     revalidate: 10, // Revalidate every 10 seconds
   };
 };

@@ -13,7 +13,7 @@ export interface IProduct {
   price: number;
   details: string;
   description?: string;
-  quantity?: number; // Thêm vào nếu cần
+  quantity: number; // Thêm vào nếu cần
 }
 
 export interface IBanner {
