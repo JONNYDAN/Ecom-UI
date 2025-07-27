@@ -15,7 +15,7 @@ import PaymentModal from "../../components/PaymentModal";
 import { IProduct } from "../../dto";
 import { fetchProducts, fetchBanners } from "../../lib/firestoreFetch";
 
-const ProductDetails = ({ product }: any) => {
+const ProductDetails = ({ product }: { product: IProduct }) => {
   const [products, setProducts] = useState<IProduct[]>([]);
 
   const { images, name, details, price, description } = product;
@@ -56,7 +56,7 @@ const ProductDetails = ({ product }: any) => {
         <title>{name}</title>
         <meta 
           name="description" 
-          content={`Discover ${name} - ${details}. High-quality product at $${price}. ${description.substring(0, 100)}... Free shipping available. Shop now!`} 
+          content={`Discover ${name} - ${details}. High-quality product at $${price}. ${description}... Free shipping available. Shop now!`} 
         />
         <meta property="og:title" content={name} />
         <meta property="og:description" content={description} />
@@ -165,11 +165,11 @@ const ProductDetails = ({ product }: any) => {
           </div>
           <ShareButtons
             name={name}
-            details={description}
+            details={details}
             image={urlFor(images[0])
               .width(200)
               .url()} // hình nhỏ
-            url={`https://ecom-ui-liart.vercel.app/product/${product.slug.current}`}
+            url={`https://ecom-ui-2o1f.vercel.app/product/${product.slug.current}`}
           />
 
           <div className="buttons">
@@ -421,15 +421,9 @@ export const getStaticProps = async ({ params }: any) => {
   const products = await fetchProducts();
   const product = products.find((item: IProduct) => item.slug.current === params.slug);
 
+  console.log("Fetched product:", product); // Kiểm tra dữ liệu sản phẩm
   return {
-    props: { product,
-      openGraphData: {
-        title: `${product?.name} | Tên Shop`,
-        description: product?.description,
-        imageUrl: product?.images[0],
-        url: `https://ecom-ui-liart.vercel.app/product/${product?.slug.current}`
-      }
-     },
+    props: { product},
     revalidate: 10, // Revalidate every 10 seconds
   };
 };
