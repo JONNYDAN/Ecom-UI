@@ -2,9 +2,28 @@ import { Html, Head, Main, NextScript } from 'next/document'
 import Script from 'next/script'
 
 export default function Document() {
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "E-Commerce UI",
+    "url": "https://sheetmob.net",
+    "logo": "https://sheetmob.net/logo.webp",
+    "sameAs": [
+      "https://www.facebook.com/profile.php?id=61578326255422",
+    ]
+  };
+
   return (
     <Html>
       <Head>
+        {/* Schema.org */}
+        <Script
+          id="organization-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+          strategy="afterInteractive"
+        />
+
         {/* Mailchimp Script */}
         <script 
           id="mcjs" 
