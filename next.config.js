@@ -10,7 +10,14 @@ const nextConfig = {
       {
         source: '/:path*',
         headers: [
-          { key: 'Access-Control-Allow-Origin', value: '*' },
+          { 
+            key: 'Access-Control-Allow-Origin', 
+            value: '*' 
+          },
+          {
+            key: 'Content-Security-Policy',
+            value: "connect-src 'self' https://www.google-analytics.com",
+          },
         ],
       },
     ];
