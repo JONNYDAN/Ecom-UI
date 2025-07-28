@@ -66,7 +66,7 @@ const Cart = (props: Props) => {
               <div key={item._id} className="product items-center">
                 <div className="flex aspect-square w-[130px] h-[130px] sm:w-[200px] sm:h-[200px] justify-center ">
                   <img
-                    src={urlFor(item?.image[0]).toString()}
+                    src={urlFor(item?.images[0]).toString()}
                     className="cart-product-image w-full h-full object-cover"
                   />
                 </div>
@@ -136,8 +136,9 @@ const Cart = (props: Props) => {
         <PaymentModal
           open={showPaymentModal}
           onClose={() => setShowPaymentModal(false)}
-          product={firstProduct}
-          qty={firstQty}
+          cartItems={cartItems}      // All cart items
+          totalPrice={totalPrice}    // Calculated total
+          totalQuantities={totalQuantities}
         />
       </div>
     </div>

@@ -182,8 +182,8 @@ const ProductDetails = ({ product }: any) => {
           <PaymentModal
             open={showPaymentModal}
             onClose={() => setShowPaymentModal(false)}
-            product={product}
-            qty={qty}
+            product={product}  // Single product
+            qty={qty}         // Quantity from state
           />
         </div>
       </div>
