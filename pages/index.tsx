@@ -17,6 +17,7 @@ const Home = () => {
         ]);
         setProducts(productsData);
         setBannerData(bannersData);
+        console.log("Products data from Firestore:", productsData); // Kiểm tra dữ liệu
         console.log("Products data from Firestore:", bannersData); // Kiểm tra dữ liệu
       } catch (error) {
         console.error("Error fetching data:", error);
