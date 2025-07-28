@@ -14,6 +14,7 @@ import ShareButtons from "../../components/ShareButtons";
 import PaymentModal from "../../components/PaymentModal";
 import { IProduct } from "../../dto";
 import { fetchProducts, fetchBanners } from "../../lib/firestoreFetch";
+import { FacebookIcon, FacebookShareButton } from "react-share";
 
 const ProductDetails = ({ product }: any) => {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -53,24 +54,29 @@ const ProductDetails = ({ product }: any) => {
   return (
     <div>
       <Head>
-        <title>{name}</title>
-        <meta 
-          name="description" 
-          content={`Discover ${name} - ${details}. High-quality product at $${price}. ${description.substring(0, 100)}... Free shipping available. Shop now!`} 
-        />
+        <title>{name} | Ecommerce</title>
+        <meta name="description" content={`${details} - ${description.substring(0, 160)}...`} />
+        
+        {/* Facebook Open Graph Meta Tags */}
         <meta property="og:title" content={name} />
-        <meta property="og:description" content={description} />
-        <meta
-          property="og:image"
-          content={urlFor(images[0])
-            .width(200)
-            .url()}
+        <meta property="og:description" content={details} />
+        <meta 
+          property="og:image" 
+          content={urlFor(images[0]).width(1200).height(630).url()} 
         />
-        <meta
-          property="og:url"
-          content={`${process.env.NEXT_PUBLIC_BASE_URL}/${product.slug.current}`}
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:url" content={`${process.env.NEXT_PUBLIC_BASE_URL}/product/${product.slug.current}`} />
+        <meta property="og:type" content="product.item" />
+        
+        {/* Twitter Card Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={name} />
+        <meta name="twitter:description" content={details} />
+        <meta 
+          name="twitter:image" 
+          content={urlFor(images[0]).width(1200).height(630).url()} 
         />
-        <meta property="og:type" content="product" />
       </Head>
       <div className="product-detail-container justify-center px-2.5 py-0 xs:p-0 flex-wrap md:flex-nowrap lg:mx-10 lg:justify-start">
         <div>
@@ -162,6 +168,18 @@ const ProductDetails = ({ product }: any) => {
               .url()} // hình nhỏ
             url={`${process.env.NEXT_PUBLIC_BASE_URL}/product/${product.slug.current}`}
           />
+
+          <div className="share-section flex items-center gap-4 mt-4">
+            <FacebookShareButton 
+              url={`${process.env.NEXT_PUBLIC_BASE_URL}/product/${product.slug.current}`}
+              // quote={`${name} - ${details}`}
+              hashtag="#YourBrand"
+              className="flex items-center gap-2"
+            >
+              <FacebookIcon size={32} round />
+              <span className="text-sm">Chia sẻ lên Facebook</span>
+            </FacebookShareButton>
+          </div>
 
           <div className="buttons">
             <button
