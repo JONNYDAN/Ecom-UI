@@ -13,7 +13,7 @@ import Head from "next/head";
 import ShareButtons from "../../components/ShareButtons";
 import PaymentModal from "../../components/PaymentModal";
 import { IProduct } from "../../dto";
-import { fetchProducts, fetchBanners } from "../../lib/firestoreFetch";
+import { fetchProducts, fetchBanners, fetchProductBySlug } from "../../lib/firestoreFetch";
 
 const ProductDetails = ({ product }: any) => {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -291,11 +291,11 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }: any) => {
   const products = await fetchProducts();
-  const product = products.find((item: IProduct) => item.slug.current === params.slug);
+  const product = await fetchProductBySlug(params.slug);
 
+  console.log("Fetched product:", product); // Kiểm tra dữ liệu sản phẩm
   return {
-    props: { product },
-    revalidate: 10, // Revalidate every 10 seconds
+    props: { product, products },
   };
 };
 
