@@ -14,7 +14,6 @@ import ShareButtons from "../../components/ShareButtons";
 import PaymentModal from "../../components/PaymentModal";
 import { IProduct } from "../../dto";
 import { fetchProducts, fetchBanners, fetchProductBySlug } from "../../lib/firestoreFetch";
-import { NextSeo } from 'next-seo';
 
 const ProductDetails = ({ product }: any) => {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -53,17 +52,17 @@ const ProductDetails = ({ product }: any) => {
 
   return (
     <div>
-      {/* <Head>
-        <title>{name}</title>
+      <Head>
+        <title>{product.name}</title>
         <meta 
           name="description" 
-          content={`Discover ${name} - ${details}. High-quality product at $${price}... Free shipping available. Shop now!`} 
+          content={`Discover ${product.name} - ${product.details}. High-quality product at $${product.price}... Free shipping available. Shop now!`} 
         />
-        <meta property="og:title" content={name} />
-        <meta property="og:description" content={description} />
+        <meta property="og:title" content={product.name} />
+        <meta property="og:description" content={product.description} />
         <meta
           property="og:image"
-          content={urlFor(images[0])
+          content={urlFor(product.images[0])
             .width(200)
             .url()}
         />
@@ -72,38 +71,7 @@ const ProductDetails = ({ product }: any) => {
           content={`${process.env.NEXT_PUBLIC_BASE_URL}/${product.slug.current}`}
         />
         <meta property="og:type" content="product" />
-      </Head> */}
-      <NextSeo
-        title={`${product.name} | Shop Ecommerce`}
-        description={product.description.substring(0, 50) + '...'}
-        openGraph={{
-          url: `https://sheetmob.net/product/${product.slug.current}`,
-          title: product.name,
-          description: product.description,
-          images: [
-            {
-              url: urlFor(product.images[0]).width(200).url(),
-              width: 200,
-              alt: product.name,
-            }
-          ],
-          type: 'product',
-          site_name: 'Shop Ecommerce',
-        }}
-        twitter={{
-          cardType: 'summary_large_image',
-        }}
-        additionalMetaTags={[
-          {
-            property: 'product:price:amount',
-            content: product.price.toString(),
-          },
-          {
-            property: 'product:price:currency',
-            content: 'USD',
-          }
-        ]}
-      />
+      </Head>
       <div className="product-detail-container justify-center px-2.5 py-0 xs:p-0 flex-wrap md:flex-nowrap lg:mx-10 lg:justify-start">
         <div>
           <div className="image-container justify-center flex aspect-square w-[250px] h-[250px] xs:w-[310px] xs:h-[310px] sm:w-[500px] sm:h-[500px] md:w-[380px] md:h-[380px] lg:w-[500px] lg:h-[500px]">
