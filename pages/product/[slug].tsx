@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { urlFor } from "../../lib/client";
+import { client, urlFor } from "../../lib/client";
 import {
   AiOutlineMinus,
   AiOutlinePlus,
@@ -298,22 +298,55 @@ const ProductDetails = ({ product }: any) => {
   );
 };
 
+// export const getStaticPaths = async () => {
+//   const products = await fetchProducts();
+//   const paths = products.map((product: IProduct) => ({
+//     params: { slug: product.slug.current },
+//   }));
+
+//   return { paths, fallback: 'blocking' };
+// };
+
+// export const getStaticProps = async ({ params }: any) => {
+//   const products = await fetchProducts();
+//   const product = products.find((item: IProduct) => item.slug.current === params.slug);
+
+//   return {
+//     props: { product },
+//     revalidate: 10, // Revalidate every 10 seconds
+//   };
+// };
+
 export const getStaticPaths = async () => {
-  const products = await fetchProducts();
-  const paths = products.map((product: IProduct) => ({
-    params: { slug: product.slug.current },
+  const query = `*[_type == "product"] {
+    slug {
+      current
+    }
+  }
+  `;
+
+  const products = await client.fetch(query);
+  const paths = products.map((product: any) => ({
+    params: {
+      slug: product.slug.current,
+    },
   }));
 
-  return { paths, fallback: 'blocking' };
+  return {
+    paths,
+    fallback: "blocking",
+  };
 };
 
 export const getStaticProps = async ({ params }: any) => {
-  const products = await fetchProducts();
-  const product = products.find((item: IProduct) => item.slug.current === params.slug);
+  const query = `*[_type == "product" && slug.current == '${params.slug}'][0]`;
+  const productsQuery = '*[_type == "product"]';
+
+  const product = await client.fetch(query);
+  const products = await client.fetch(productsQuery);
 
   return {
-    props: { product },
-    revalidate: 10, // Revalidate every 10 seconds
+    props: { product, products },
   };
 };
 
