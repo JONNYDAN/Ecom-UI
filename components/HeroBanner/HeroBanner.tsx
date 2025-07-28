@@ -22,7 +22,7 @@ const HeroBanner = ({ heroBanner }: Props) => {
       </h1>
       <div className="justify-self-center aspect-square w-[300px] h-[300px] sm:absolute sm:right-[10%] sm:top-[0%] sm:w-[350px] sm:h-[350px] md:w-[400px] md:h-[400px] lg:w-[470px] lg:h-[470px] lg:right-[20%] xl:w-[550px] xl:h-[550px]">
         <img
-          src={heroBanner.image}
+          src={heroBanner.images && urlFor(heroBanner.images[0]).url()}
           alt="headphones"
           className="w-full h-full object-cover"
         />

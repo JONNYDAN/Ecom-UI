@@ -87,7 +87,7 @@ const Navbar = (props: Props) => {
 
       {showCart && <Cart />}
 
-      <style jsx>{`
+      <style>{`
         .logo a {
           font-size: 1.5rem;
           font-weight: bold;

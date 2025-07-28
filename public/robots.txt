@@ -1,0 +1,26 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /login/
+Disallow: /register/
+Disallow: /cart/
+Disallow: /checkout/
+Disallow: /search
+
+# Cho phép Facebook Crawler đặc biệt
+User-agent: facebookexternalhit
+Allow: /product/    # Cho phép crawl trang sản phẩm
+Allow: /            # Cho phép crawl trang chủ
+Disallow: /admin/   # Tiếp tục chặn admin
+
+# Cấu hình chung
+Allow: /assets/     # Cho phép crawl static files
+Disallow: /*.php$
+Disallow: /*.cgi$
+Disallow: /*.json$
+
+# Bỏ chặn query params (quan trọng!)
+# Disable 2 dòng sau nếu muốn cho phép params
+# Disallow: /*?*   
+# Disallow: /*&*   
+
+Sitemap: https://yourdomain.com/sitemap.xml

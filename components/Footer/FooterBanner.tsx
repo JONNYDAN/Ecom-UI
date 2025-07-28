@@ -40,7 +40,7 @@ const FooterBanner = ({ footerBanner }: Props) => {
                   xl:w-[600px] xl:h-[600px] xl:top-[-30%] xl:right-[33%]"
         >
           <img
-            src={urlFor(footerBanner.image).toString()}
+            src={urlFor(footerBanner.images[0]).toString()}
             className="w-full h-full object-cover "
           />
         </div>
