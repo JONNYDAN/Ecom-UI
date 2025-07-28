@@ -8,11 +8,13 @@ import { Toaster } from "react-hot-toast";
 
 import { Layout } from "../components";
 import { StateContextProvider } from "../context/StateContext";
+import { GoogleAnalytics } from "nextjs-google-analytics";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <StateContextProvider>
       <Layout>
+        <GoogleAnalytics trackPageViews gaMeasurementId="G-Y5VXZ0RDTB" />
         <Toaster />
         <Component {...pageProps} />
       </Layout>
