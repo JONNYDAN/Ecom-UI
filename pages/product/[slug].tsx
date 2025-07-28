@@ -15,7 +15,7 @@ import PaymentModal from "../../components/PaymentModal";
 import { IProduct } from "../../dto";
 import { fetchProducts, fetchBanners, fetchProductBySlug } from "../../lib/firestoreFetch";
 
-const ProductDetails = ({ product }: any) => {
+const ProductDetails = ({ product } : any) => {
   const [products, setProducts] = useState<IProduct[]>([]);
 
   const { images, name, details, price, description } = product;
@@ -49,6 +49,9 @@ const ProductDetails = ({ product }: any) => {
       </div>
     );
   }
+  const ogImageUrl = product.images && product.images.length > 0 
+    ? urlFor(product.images[0]).width(1200).url() 
+    : `${process.env.NEXT_PUBLIC_BASE_URL}/banner_share.jpg`;
 
   return (
     <div>
@@ -60,15 +63,12 @@ const ProductDetails = ({ product }: any) => {
         />
         <meta property="og:title" content={product.name} />
         <meta property="og:description" content={product.description} />
-        <meta
-          property="og:image"
-          content={urlFor(product.images[0])
-            .width(200)
-            .url()}
-        />
+        <meta property="og:image" content={ogImageUrl} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta
           property="og:url"
-          content={`${process.env.NEXT_PUBLIC_BASE_URL}/${product.slug.current}`}
+          content={`${process.env.NEXT_PUBLIC_BASE_URL}/product/${product.slug.current}`}
         />
         <meta property="og:type" content="product" />
       </Head>
