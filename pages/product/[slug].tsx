@@ -14,8 +14,14 @@ import ShareButtons from "../../components/ShareButtons";
 import PaymentModal from "../../components/PaymentModal";
 import { IProduct } from "../../dto";
 import { fetchProducts, fetchBanners, fetchProductBySlug } from "../../lib/firestoreFetch";
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../lib/firebase';
+import LoginRegisterModal from "../../components/LoginRegisterModal/LoginRegisterModal";
+
 
 const ProductDetails = ({ product } : any) => {
+  const [user] = useAuthState(auth);
+  
   const [products, setProducts] = useState<IProduct[]>([]);
 
   const { images, name, details, price, description } = product;
@@ -23,6 +29,8 @@ const ProductDetails = ({ product } : any) => {
   const { decreaseQty, increaseQty, qty, onAdd } = useStateContext();
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -171,20 +179,33 @@ const ProductDetails = ({ product } : any) => {
             >
               Add to Cart
             </button>
-            <button
-              type="button"
-              className="buy-now w-[110px] whitespace-nowrap text-[15px] px-3 py-2 mt-[30px] xs:w-[140px] sm:w-[230px] sm:px-4 sm:py-3 sm:text-[20px] md:text-[18px] md:px-2 md:py-2 md:w-[150px] lg:w-[190px]"
-              onClick={() => setShowPaymentModal(true)}
-            >
-              PURCHASE
-            </button>
+            {!user ? (
+              <button
+                type="button"
+                className="buy-now w-[110px] whitespace-nowrap text-[15px] px-3 py-2 mt-[30px] xs:w-[140px] sm:w-[230px] sm:px-4 sm:py-3 sm:text-[20px] md:text-[18px] md:px-2 md:py-2 md:w-[150px] lg:w-[190px]"
+                onClick={() => setIsModalOpen(true)}
+              >
+                PURCHASE
+              </button>
+            ):(
+              <button
+                type="button"
+                className="buy-now w-[110px] whitespace-nowrap text-[15px] px-3 py-2 mt-[30px] xs:w-[140px] sm:w-[230px] sm:px-4 sm:py-3 sm:text-[20px] md:text-[18px] md:px-2 md:py-2 md:w-[150px] lg:w-[190px]"
+                onClick={() => setShowPaymentModal(true)}
+              >
+                PURCHASE
+              </button>
+            )}
           </div>
+
           <PaymentModal
             open={showPaymentModal}
             onClose={() => setShowPaymentModal(false)}
             product={product}  // Single product
             qty={qty}         // Quantity from state
           />
+
+          
         </div>
       </div>
       <div className="pt-5 mx-auto text-gray-800">
@@ -276,6 +297,14 @@ const ProductDetails = ({ product } : any) => {
           </div>
         </div>
       </div>
+
+      <LoginRegisterModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onLoginSuccess={() => {
+          setIsModalOpen(false);
+        }}
+      />
     </div>
   );
 };

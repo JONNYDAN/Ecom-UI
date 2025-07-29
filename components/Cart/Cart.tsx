@@ -12,10 +12,14 @@ import toast from "react-hot-toast";
 import { useStateContext } from "../../context/StateContext";
 import { urlFor } from "../../lib/client";
 import PaymentModal from "../PaymentModal";
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../lib/firebase';
+import LoginRegisterModal from "../LoginRegisterModal/LoginRegisterModal";
 
 type Props = {};
 
 const Cart = (props: Props) => {
+  const [user] = useAuthState(auth);
   const cartRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const {
     totalPrice,
@@ -27,6 +31,7 @@ const Cart = (props: Props) => {
   } = useStateContext();
 
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const firstProduct = cartItems[0];
   const firstQty = firstProduct?.quantity || 1;
@@ -123,6 +128,15 @@ const Cart = (props: Props) => {
             </div>
 
             <div className="btn-container">
+            {!user ? (
+              <button
+              type="button"
+              className="btn"
+              onClick={() => setIsModalOpen(true)}
+              >
+                Purchase
+              </button>
+            ):(
               <button
                 type="button"
                 className="btn"
@@ -130,6 +144,7 @@ const Cart = (props: Props) => {
               >
                 Purchase
               </button>
+            )}
             </div>
           </div>
         )}
@@ -139,6 +154,13 @@ const Cart = (props: Props) => {
           cartItems={cartItems}      // All cart items
           totalPrice={totalPrice}    // Calculated total
           totalQuantities={totalQuantities}
+        />
+        <LoginRegisterModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onLoginSuccess={() => {
+            setIsModalOpen(false);
+          }}
         />
       </div>
     </div>

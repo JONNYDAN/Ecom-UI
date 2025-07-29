@@ -1,45 +1,69 @@
 import Stripe from "stripe";
 import { createOrder } from "../../lib/firestoreFetch";
+import admin from "../../lib/firebaseAdmin";
+import { getAuthUser } from '../../lib/authUtils'; 
 
-const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: "2023-08-16"
+});
 
 export default async function handler(req, res) {
+  // Xử lý CORS preflight
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST');
+    res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type');
+    return res.status(200).end();
+  }
+
+  
   if (req.method === "POST") {
     try {
-      // 1. Nhận dữ liệu từ client trước
-      const items = req.body; // <-- Định nghĩa items trước khi sử dụng
+      // 1. Xác thực người dùng
+      const user = await getAuthUser(req);
+      if (!user) {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+
+      // 2. Validate request body
+      if (!req.body || !Array.isArray(req.body)) {
+        return res.status(400).json({ error: "Invalid request format" });
+      }
+
+      const items = req.body;
+      const customerData = req.body.customer || {};
       const origin = req.headers.origin || process.env.NEXT_PUBLIC_BASE_URL;
 
-      // 2. Tạo session Stripe
-      const params = {
-        submit_type: "pay",
+      // 3. Tạo session Stripe
+      const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
-        billing_address_collection: "auto",
-        shipping_options: [{ shipping_rate: "shr_1Rlom9LqK3LZNTsfQHErWodR" }],
-        line_items: items.map((item) => { // <-- Giờ items đã được định nghĩa
-          const productImage = item.product.images?.[0] || '';
-          
-          return {
-            price_data: {
-              currency: "usd",
-              product_data: {
-                name: item.product.name,
-                images: productImage ? [productImage] : [],
-              },
-              unit_amount: item.product.price * 100, 
+        customer_email: user.email,
+        metadata: { userId: user.uid },
+        line_items: items.map((item) => ({
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: item.product.name,
+              images: item.product.images?.filter(Boolean).slice(0, 1) || [],
             },
-            quantity: item.quantity,
-          };
-        }),
+            unit_amount: Math.round(item.product.price * 100),
+          },
+          quantity: item.quantity,
+        })),
         mode: "payment",
         success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${origin}/cart`,
-      };
+        cancel_url: `${origin}/`,
+        shipping_options: [{ shipping_rate: "shr_1Rlom9LqK3LZNTsfQHErWodR" }],
+      });
 
-      const session = await stripe.checkout.sessions.create(params);
-
-      // 3. CHỈ lưu order khi session được tạo thành công
+      // 4. Lưu order
       const orderData = {
+        id: session.id,
+        customer_details: {
+          name: user.name || customerData.name || "Customer",
+          email: user.email || customerData.email,
+        },
+        userId: user.uid,
         stripeSessionId: session.id,
         items: items.map(item => ({
           productId: item.product._id,
@@ -50,16 +74,22 @@ export default async function handler(req, res) {
         })),
         totalAmount: items.reduce((sum, item) => sum + (item.product.price * item.quantity), 0),
         status: "pending",
+        paymentStatus: "unpaid",
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
       };
 
-      await createOrder(orderData); // <-- Hàm này bạn đã định nghĩa trong firestoreFetch.ts
+      await createOrder(orderData);
 
-      res.status(200).json(session);
+      return res.status(200).json({ id: session.id });
     } catch (err) {
-      console.error("Stripe API error:", err);
-      res.status(500).json({ error: err.message });
+      console.error("API Error:", err);
+      return res.status(err.statusCode || 500).json({ 
+        error: err.message,
+        ...(process.env.NODE_ENV === "development" && { stack: err.stack })
+      });
     }
   }
+  res.setHeader("Allow", "POST");
+  return res.status(405).end("Method Not Allowed");
 }
