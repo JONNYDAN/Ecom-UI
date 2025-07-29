@@ -47,13 +47,13 @@ export default function Document() {
           <div id="tawkto-button-container"></div>
 
           <a
-            href="https://m.me/735809052946502"
+            href="https://m.me/744142895445674"
             target="_blank"
             rel="noopener noreferrer"
             style={{
               position: 'fixed',
               bottom: '100px',
-              right: '20px',
+              right: '25px',
               backgroundColor: '#0084FF',
               color: '#fff',
               borderRadius: '50%',
