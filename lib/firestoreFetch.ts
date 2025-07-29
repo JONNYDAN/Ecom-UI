@@ -1,5 +1,5 @@
 import { db } from "./firebase";
-import { collection, getDocs, doc, getDoc, query, where } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc, query, where, addDoc } from "firebase/firestore";
 import { IProduct, IBanner } from "../dto";
 
 
@@ -33,5 +33,15 @@ export async function fetchProductBySlug(slug: string): Promise<IProduct | null>
   } catch (error) {
     console.error("Error fetching product by slug:", error);
     return null;
+  }
+}
+
+export async function createOrder(orderData: any): Promise<string> {
+  try {
+    const docRef = await addDoc(collection(db, "orders"), orderData);
+    return docRef.id;
+  } catch (error) {
+    console.error("Error creating order:", error);
+    throw new Error("Failed to create order");
   }
 }

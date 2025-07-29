@@ -29,3 +29,22 @@ export interface IBanner {
   discount: string;
   saleTime: string;
 }
+
+export interface IOrderItem {
+  productId: string;
+  name: string;
+  price: number;
+  quantity: number;
+  image?: string;
+}
+
+export interface IOrder {
+  _id?: string;
+  stripeSessionId: string;
+  items: IOrderItem[];
+  totalAmount: number;
+  status: "pending" | "completed" | "cancelled";
+  paymentStatus: "pending" | "paid" | "failed";
+  createdAt: string;
+  updatedAt: string;
+}
