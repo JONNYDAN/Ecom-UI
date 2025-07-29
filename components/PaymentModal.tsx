@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import { FaCcStripe, FaTimes, FaSpinner } from "react-icons/fa";
 import getStripe from "../lib/getStripe";
+import { auth } from '../lib/firebase';
 
 // Set app element for accessibility
 Modal.setAppElement("#__next");
@@ -116,6 +117,12 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
         throw new Error("Không thể kết nối với Stripe");
       }
 
+      // 1. Lấy token từ Firebase Auth
+      const user = auth.currentUser;
+      if (!user) throw new Error("Not authenticated");
+      
+      const token = await user.getIdToken();
+
       // Prepare items based on purchase type
       const items = cartItems 
         ? cartItems.map(item => ({
@@ -139,7 +146,10 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
 
       const response = await fetch("/api/stripe", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+         },
         body: JSON.stringify(items),
       });
 

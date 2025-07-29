@@ -40,6 +40,12 @@ export interface IOrderItem {
 
 export interface IOrder {
   _id?: string;
+  id: string;
+  customer_details: {
+    name: string;
+    email: string;
+  };
+  userId: string; // ID người dùng từ Firebase Auth
   stripeSessionId: string;
   items: IOrderItem[];
   totalAmount: number;
