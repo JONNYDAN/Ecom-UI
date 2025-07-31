@@ -1,6 +1,6 @@
 import { db } from "./firebase";
 import { collection, getDocs, doc, getDoc, query, where, addDoc } from "firebase/firestore";
-import { IProduct, IBanner } from "../dto";
+import { IProduct, IBanner, IOrder } from "../dto";
 
 
 
@@ -45,3 +45,19 @@ export async function createOrder(orderData: any): Promise<string> {
     throw new Error("Failed to create order");
   }
 }
+
+//Lấy danh sách orders theo userId
+export async function fetchOrdersByUserId(userId: string): Promise<IOrder[]> {
+  try {
+    const q = query(
+      collection(db, "orders"),
+      where("userId", "==", userId)
+    );
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({ _id: doc.id, ...doc.data() } as IOrder));
+  } catch (error) {
+    console.error("Error fetching orders by userId:", error);
+    throw new Error("Failed to fetch orders");
+  }
+}
+   

@@ -2,14 +2,16 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../lib/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebase";
+import { IOrder } from "../dto";
 
 const Profile = () => {
   const [user, setUser] = useState<any>(null);
   const [userData, setUserData] = useState<any>(null);
   const [activeTab, setActiveTab] = useState<"info" | "orders">("info");
   const [showModal, setShowModal] = useState(false);
+  const [orders, setOrders] = useState<IOrder[]>([]);
 
   const [formData, setFormData] = useState({
     name: userData?.username,
@@ -18,6 +20,20 @@ const Profile = () => {
     phoneNumber: userData?.phoneNumber,
     address: userData?.address
   });
+
+  const fetchOrdersByUserId = async (userId: string): Promise<IOrder[]> => {
+    try {
+      const q = query(
+        collection(db, "orders"),
+        where("userId", "==", userId)
+      );
+      const querySnapshot = await getDocs(q);
+      return querySnapshot.docs.map(doc => ({ _id: doc.id, ...doc.data() } as IOrder));
+    } catch (error) {
+      console.error("Error fetching orders by userId:", error);
+      throw new Error("Failed to fetch orders");
+    }
+  };
 
   const handleEdit = () => {
     setFormData({
@@ -51,8 +67,13 @@ const Profile = () => {
           console.log("User Firestore data:", userDoc.data());
           setUserData(userDoc.data());
         }
+        
+        // Lấy danh sách đơn hàng
+        const userOrders = await fetchOrdersByUserId(currentUser.uid);
+        setOrders(userOrders);
       } else {
         setUserData(null);
+        setOrders([]);
       }
     });
     return () => unsubscribe();
@@ -70,6 +91,11 @@ const Profile = () => {
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("vi-VN");
   };
 
   return (
@@ -187,49 +213,51 @@ const Profile = () => {
               <div className="max-w-4xl mx-auto">
                 <h3 className="text-xl font-semibold mb-6">Order History</h3>
 
-                <div className="mb-8">
-                  <div className="bg-white rounded-lg shadow divide-y">
-                    {/* Order Item */}
-                    <div className="p-4 flex flex-col md:flex-row md:items-center md:justify-between">
-                      <div className="flex-1">
-                        <p className="font-medium">Order #12345</p>
-                        <div className="flex flex-col md:flex-row md:gap-6 md:items-center text-sm text-gray-600 mt-1">
-                          <p className="text-gray-500">Placed on: 20/07/2025</p>
-                          <p className="text-green-600 font-medium">
-                            Status: Delivered
-                          </p>
-                          <p>Total: 1.200.000₫</p>
+                {orders.length === 0 ? (
+                  <p className="text-gray-500">You have no orders yet.</p>
+                ) : (
+                  <div className="space-y-4">
+                    {orders.map((order) => (
+                      <div key={order._id} className="bg-white rounded-lg shadow divide-y">
+                        <div className="p-4">
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <p className="font-medium">Order #{order._id?.substring(0, 8)}</p>
+                              <div className="flex flex-col md:flex-row md:gap-6 md:items-center text-sm text-gray-600 mt-1">
+                                <p className="text-gray-500">Placed on: {formatDate(order.createdAt)}</p>
+                                <p className={`font-medium ${
+                                  order.status === "completed" ? "text-green-600" :
+                                  order.status === "cancelled" ? "text-red-600" : "text-yellow-600"
+                                }`}>
+                                  Status: {order.status}
+                                </p>
+                                <p>Total: {order.totalAmount.toLocaleString("vi-VN")}₫</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="mt-4 space-y-3">
+                            <h4 className="text-sm font-medium">Items:</h4>
+                            {order.items.map((item, index) => (
+                              <div key={index} className="flex items-center gap-3 p-2 border rounded">
+                                <img
+                                  src={item.image}
+                                  alt={item.name}
+                                  className="w-16 h-16 object-cover rounded"
+                                />
+                                <div className="flex-1">
+                                  <p className="font-medium">{item.name}</p>
+                                  <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
+                                </div>
+                                <p className="font-medium">{item.price.toLocaleString("vi-VN")}₫</p>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       </div>
-
-                      <div className="flex flex-wrap gap-2 mt-3 md:mt-0">
-                        <button className="border border-blue-500 text-blue-500 px-3 py-1 rounded text-sm hover:bg-blue-500 hover:text-white">
-                          View order details
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Order Item */}
-                    <div className="p-4 flex flex-col md:flex-row md:items-center md:justify-between">
-                      <div className="flex-1">
-                        <p className="font-medium">Order #12346</p>
-                        <div className="flex flex-col md:flex-row md:gap-6 md:items-center text-sm text-gray-600 mt-1">
-                          <p className="text-gray-500">Placed on: 18/07/2025</p>
-                          <p className="text-yellow-600 font-medium">
-                            Status: Processing
-                          </p>
-                          <p>Total: 850.000₫</p>
-                        </div>
-                      </div>
-
-                      <div className="flex flex-wrap gap-2 mt-3 md:mt-0">
-                        <button className="border border-blue-500 text-blue-500 px-3 py-1 rounded text-sm hover:bg-blue-500 hover:text-white">
-                          View order details
-                        </button>
-                      </div>
-                    </div>
+                    ))}
                   </div>
-                </div>
+                )}
               </div>
             </div>
           )}

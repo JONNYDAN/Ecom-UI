@@ -58,7 +58,7 @@ export default async function handler(req, res) {
 
       // 4. Lưu order
       const orderData = {
-        id: session.id,
+        // id: session.id,
         customer_details: {
           name: user.name || customerData.name || "Customer",
           email: user.email || customerData.email,

@@ -40,7 +40,7 @@ export interface IOrderItem {
 
 export interface IOrder {
   _id?: string;
-  id: string;
+  // id: string;
   customer_details: {
     name: string;
     email: string;
