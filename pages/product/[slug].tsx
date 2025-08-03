@@ -10,75 +10,84 @@ import { Product } from "../../components";
 import { useStateContext } from "../../context/StateContext";
 
 import Head from "next/head";
+
 import ShareButtons from "../../components/ShareButtons";
 import PaymentModal from "../../components/PaymentModal";
 import { IProduct } from "../../dto";
-import { fetchProducts, fetchBanners, fetchProductBySlug } from "../../lib/firestoreFetch";
+import {
+  fetchProducts,
+  fetchBanners,
+  fetchProductBySlug,
+} from "../../lib/firestoreFetch";
 
-const ProductDetails = ({ product } : any) => {
-  const [products, setProducts] = useState<IProduct[]>([]);
-
+const ProductDetails = ({ product, products }: any) => {
+  // const [products, setProducts] = useState<IProduct[]>([]);
   const { images, name, details, price, description } = product;
   const [index, setIndex] = useState(0);
   const { decreaseQty, increaseQty, qty, onAdd } = useStateContext();
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
+  console.log("🖼 images:", images);
+  console.log("✅ images[0] (raw):", images?.[0]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [productsData] = await Promise.all([fetchProducts()]);
-        setProducts(productsData);
-        console.log("Products data from Firestore:", productsData); // Kiểm tra dữ liệu
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const [productsData] = await Promise.all([fetchProducts()]);
+  //       setProducts(productsData);
+  //       console.log("Products data from Firestore:", productsData);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
-  // console.log("Product details:", product); // Kiểm tra dữ liệu sản phẩm
+  // if (loading) {
+  //   return (
+  //     <div className="flex justify-center items-center h-screen">
+  //       <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+  //     </div>
+  //   );
+  // }
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
-    );
-  }
-  const ogImageUrl = product.images && product.images.length > 0 
-    ? urlFor(product.images[0]).width(1200).url() 
-    : `${process.env.NEXT_PUBLIC_BASE_URL}/banner_share.jpg`;
-
+  const imageUrl = product.images[0];
+  console.log("images:", images);
+  console.log("images[0]:", images?.[0]);
+  console.log("og:image url:", images && images.length > 0 ? urlFor(images[0]).url() : "https://ecom-ui-black.vercel.app/default-og-image.jpg");
   return (
+
     <div>
       <Head>
-        <title>{product.name}</title>
-        <meta 
-          name="description" 
-          content={`Discover ${product.name} - ${product.details}. High-quality product at $${product.price}... Free shipping available. Shop now!`} 
-        />
+        <title>{product.name} | E-commerce</title>
+        <meta name="description" content={product.description} />
         <meta property="og:title" content={product.name} />
         <meta property="og:description" content={product.description} />
-        <meta property="og:image" content={ogImageUrl} />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
         <meta
-          property="og:url"
-          content={`${process.env.NEXT_PUBLIC_BASE_URL}/product/${product.slug.current}`}
+          property="og:image"
+          content={
+            images && images.length > 0
+              ? images[0]
+              : "https://ecom-ui-black.vercel.app/default-og-image.jpg"
+          }
         />
         <meta property="og:type" content="product" />
+        <meta property="fb:app_id" content="1214114103737693" />
+        <meta property="og:url" content={`https://ecom-ui-black.vercel.app/product/${product.slug.current}`} />
       </Head>
+
+
+
       <div className="product-detail-container justify-center px-2.5 py-0 xs:p-0 flex-wrap md:flex-nowrap lg:mx-10 lg:justify-start">
         <div>
           <div className="image-container justify-center flex aspect-square w-[250px] h-[250px] xs:w-[310px] xs:h-[310px] sm:w-[500px] sm:h-[500px] md:w-[380px] md:h-[380px] lg:w-[500px] lg:h-[500px]">
             <img
               src={urlFor(images[index]).toString()}
               className="product-detail-image w-full h-full object-cover"
-              alt={`${name} - Main product view`} 
+              alt={`${name} - Main product view`}
             />
           </div>
           <div className="small-images-container justify-center">
@@ -142,7 +151,7 @@ const ProductDetails = ({ product } : any) => {
               </span>
               <span
                 className="num px-4 py-2 self-center font-normal text-[16px] xs:text-[18px] sm:text-[20px] sm:px-6 sm:py-3 md:text-[18px] md:px-4 md:py-2"
-                onClick={() => {}}
+                onClick={() => { }}
               >
                 {qty}
               </span>
@@ -215,15 +224,15 @@ const ProductDetails = ({ product } : any) => {
         <section className="care-instructions bg-gray-50 p-8 rounded-xl mb-8">
           <h3 className="text-2xl font-bold mb-6 text-gray-900">Complete Care & Maintenance Guide</h3>
           <div className="prose lg:prose-lg">
-            <p className="mb-6">Proper care will maintain your {name}'s beauty and functionality for years to come. Follow these professional recommendations:</p>
-            
+            <p className="mb-6">Proper care will maintain your {name}&rsquo;s beauty and functionality for years to come. Follow these professional recommendations:</p>
+
             <h4 className="text-xl font-semibold mb-3">Daily Maintenance</h4>
             <ul className="list-disc pl-6 space-y-2 mb-6">
               <li>Wipe surfaces with microfiber cloth to remove dust particles that can cause micro-scratches</li>
               <li>Rotate or flip components weekly to ensure even wear patterns</li>
               <li>Check tension points monthly for proper alignment</li>
             </ul>
-            
+
             <h4 className="text-xl font-semibold mb-3">Seasonal Deep Cleaning</h4>
             <p className="mb-3">Every 3-6 months, perform these thorough cleaning steps:</p>
             <ul className="list-disc pl-6 space-y-2 mb-6">
@@ -231,7 +240,7 @@ const ProductDetails = ({ product } : any) => {
               <li>Apply with soft-bristle brush in circular motions</li>
               <li>Rinse with damp cloth and dry immediately</li>
             </ul>
-            
+
             <h4 className="text-xl font-semibold mb-3">Long-Term Preservation</h4>
             <ul className="list-disc pl-6 space-y-2">
               <li>Apply protective conditioner every 12-18 months</li>
@@ -253,7 +262,7 @@ const ProductDetails = ({ product } : any) => {
             </ul>
             <p>Plus 24/7 customer support and free consultation on proper maintenance.</p>
           </div>
-          
+
           <div className="brand-story bg-gray-50 p-8 rounded-xl">
             <h3 className="text-2xl font-bold mb-4 text-gray-900">The Story Behind {name}</h3>
             <p className="mb-4">Founded in 2010, our workshop began with three artisans dedicated to reviving traditional techniques. Today, we combine these methods with modern technology while maintaining our commitment to:</p>
@@ -262,7 +271,7 @@ const ProductDetails = ({ product } : any) => {
               <li>Living wages for all craftspeople</li>
               <li>Zero-waste production processes</li>
             </ul>
-            <p className="mt-4">When you choose {name}, you're investing in more than a product - you're supporting sustainable craftsmanship and helping preserve skills that might otherwise disappear.</p>
+            <p className="mt-4">When you choose {name}, you&#39;re investing in more than a product - you&#39;re supporting sustainable craftsmanship and helping preserve skills that might otherwise disappear.</p>
           </div>
         </section>
       </div>
@@ -280,16 +289,16 @@ const ProductDetails = ({ product } : any) => {
   );
 };
 
-export const getStaticPaths = async () => {
-  const products = await fetchProducts();
-  const paths = products.map((product: IProduct) => ({
-    params: { slug: product.slug.current },
-  }));
+// export const getStaticPaths = async () => {
+//   const products = await fetchProducts();
+//   const paths = products.map((product: IProduct) => ({
+//     params: { slug: product.slug.current },
+//   }));
 
-  return { paths, fallback: 'blocking' };
-};
+//   return { paths, fallback: 'blocking' };
+// };
 
-export const getStaticProps = async ({ params }: any) => {
+export const getServerSideProps = async ({ params }: any) => {
   const products = await fetchProducts();
   const product = await fetchProductBySlug(params.slug);
 
@@ -298,6 +307,5 @@ export const getStaticProps = async ({ params }: any) => {
     props: { product, products },
   };
 };
-
 
 export default ProductDetails;

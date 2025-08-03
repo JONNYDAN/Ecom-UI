@@ -9,9 +9,12 @@ interface ShareButtonsProps {
 
 const ShareButtons: React.FC<ShareButtonsProps> = ({ name, details, image, url }) => {
   const handleShare = () => {
-    const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(`${name}\n${details}`)}`;
-    window.open(shareUrl, "_blank", "width=600,height=400");
-  };
+  const baseUrl = encodeURIComponent(url);
+  const text = encodeURIComponent(`${name} — ${details}`);
+  const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${baseUrl}&quote=${text}`;
+
+  window.open(facebookShareUrl, "_blank", "width=600,height=400");
+};
 
   return (
     <button className="fb-share-btn" onClick={handleShare}>
