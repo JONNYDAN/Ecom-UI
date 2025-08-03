@@ -68,12 +68,12 @@ const ProductDetails = ({ product, products }: any) => {
           property="og:image"
           content={
             images && images.length > 0
-              ? `${images[0]}?width=200`
+              ? `${images[0]}?width=200&height=200`
               : `${process.env.NEXT_PUBLIC_BASE_URL}/banner_share.jpg`
           }
         />
-        {/* <meta property="og:image:width" content="200" />
-        <meta property="og:image:height" content="200" /> */}
+        <meta property="og:image:width" content="200" />
+        <meta property="og:image:height" content="200" />
         <meta property="og:type" content="product" />
         <meta property="fb:app_id" content="1214114103737693" />
         <meta property="og:url" content={`${process.env.NEXT_PUBLIC_BASE_URL}/product/${product.slug.current}`} />
