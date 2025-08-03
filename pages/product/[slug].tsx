@@ -56,9 +56,6 @@ const ProductDetails = ({ product, products }: any) => {
   // }
 
   const imageUrl = product.images[0];
-  // console.log("images:", images);
-  // console.log("images[0]:", images?.[0]);
-  // console.log("og:image url:", images && images.length > 0 ? urlFor(images[0]).url() : "https://ecom-ui-black.vercel.app/default-og-image.jpg");
   return (
 
     <div>
@@ -72,12 +69,13 @@ const ProductDetails = ({ product, products }: any) => {
           content={
             images && images.length > 0
               ? images[0]
-              : "https://ecom-ui-black.vercel.app/default-og-image.jpg"
+              : `${process.env.NEXT_PUBLIC_BASE_URL}/banner_share.jpg`
           }
         />
+        <meta property="og:image:width" content="200" />
         <meta property="og:type" content="product" />
         <meta property="fb:app_id" content="1214114103737693" />
-        <meta property="og:url" content={`https://ecom-ui-black.vercel.app/product/${product.slug.current}`} />
+        <meta property="og:url" content={`${process.env.NEXT_PUBLIC_BASE_URL}/product/${product.slug.current}`} />
       </Head>
 
 
