@@ -19,13 +19,9 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../lib/firebase';
 import LoginRegisterModal from "../../components/LoginRegisterModal/LoginRegisterModal";
 
-
-const ProductDetails = ({ product } : any) => {
+const ProductDetails = ({ product, products }: any) => {
   const [user] = useAuthState(auth);
   
-  const [products, setProducts] = useState<IProduct[]>([]);
-
-const ProductDetails = ({ product, products }: any) => {
   // const [products, setProducts] = useState<IProduct[]>([]);
   const { images, name, details, price, description } = product;
   const [index, setIndex] = useState(0);
@@ -60,9 +56,9 @@ const ProductDetails = ({ product, products }: any) => {
   // }
 
   const imageUrl = product.images[0];
-  console.log("images:", images);
-  console.log("images[0]:", images?.[0]);
-  console.log("og:image url:", images && images.length > 0 ? urlFor(images[0]).url() : "https://ecom-ui-black.vercel.app/default-og-image.jpg");
+  // console.log("images:", images);
+  // console.log("images[0]:", images?.[0]);
+  // console.log("og:image url:", images && images.length > 0 ? urlFor(images[0]).url() : "https://ecom-ui-black.vercel.app/default-og-image.jpg");
   return (
 
     <div>
