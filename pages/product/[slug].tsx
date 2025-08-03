@@ -72,7 +72,8 @@ const ProductDetails = ({ product, products }: any) => {
               : `${process.env.NEXT_PUBLIC_BASE_URL}/banner_share.jpg`
           }
         />
-        <meta property="og:image:width" content="200" />
+        <meta property="og:image:width" content="400" />
+        <meta property="og:image:height" content="400" />
         <meta property="og:type" content="product" />
         <meta property="fb:app_id" content="1214114103737693" />
         <meta property="og:url" content={`${process.env.NEXT_PUBLIC_BASE_URL}/product/${product.slug.current}`} />
