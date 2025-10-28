@@ -26,7 +26,7 @@
     "lib/client.js",
     "pages/api/stripe.js",
     "lib/migrateSanityToFirestore.js",
-    "pages/payment_test.js"  ],
+    "pages/payment_test.js", "pages/vnpay-return.tsx"  ],
   "exclude": [
     "node_modules"
   ]

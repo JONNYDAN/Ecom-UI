@@ -34,7 +34,7 @@ interface PaymentModalProps {
   totalQuantities?: number; // Add this new prop
 }
 
-type PaymentMethod = 'stripe' | 'onepay';
+type PaymentMethod = 'stripe' | 'vnpay';
 
 const PaymentModal: React.FC<PaymentModalProps> = ({
   open,
@@ -69,7 +69,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
       if (method === 'stripe') {
         await handleStripePayment();
       } else {
-        await handleOnePayPayment();
+        await handleVNPayPayment();
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Đã xảy ra lỗi không mong muốn");
@@ -178,10 +178,8 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
     }
   };
 
-  const handleOnePayPayment = async () => {
-    // if (!validateItems()) return;
-
-    setLoading('onepay');
+  const handleVNPayPayment = async () => {
+    setLoading('vnpay');
     setError(null);
 
     try {
@@ -190,59 +188,64 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
         ? cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0)
         : product!.price * qty!;
 
-      // Lấy thông tin khách hàng (nên lấy từ form thực tế)
-      const customerInfo = {
-        email: "customer@example.com", // Thay bằng email thực
-        name: "Customer Name",        // Thay bằng tên thực
-        phone: "0123456789"          // Thay bằng số điện thoại thực
-      };
+      // Lấy thông tin user từ Firebase Auth
+      const user = auth.currentUser;
+      if (!user) throw new Error("Vui lòng đăng nhập để thanh toán");
+      
+      const userEmail = user.email;
+      const userName = user.displayName || "Khách hàng";
 
-      // Gọi API OnePay với tổng số tiền
-      const response = await fetch("/api/onepay", {
+      // Gọi API VNPay
+      const response = await fetch("/api/vnpay", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           product: {
-            // Tạo product tổng hợp cho đơn hàng
             _id: cartItems ? 'multi-products' : product!._id,
             name: cartItems 
               ? `Đơn hàng ${cartItems.length} sản phẩm` 
               : product!.name,
-            price: totalAmount, // Truyền tổng số tiền
+            price: totalAmount,
             images: cartItems && cartItems.length > 0 
               ? cartItems[0].images 
               : product!.images
           },
-          qty: 1, // Luôn là 1 vì đã tính tổng
-          email: customerInfo.email,
-          phone: customerInfo.phone
+          qty: 1,
+          email: userEmail,
+          phone: "" // Có thể thêm field nhập số điện thoại
         }),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || "Khởi tạo thanh toán OnePay thất bại");
-      }
-
       const data = await response.json();
-      if (!data?.url) {
-        throw new Error("Không nhận được URL thanh toán từ OnePay");
+
+      if (!response.ok) {
+        throw new Error(data.message || data.error || "Khởi tạo thanh toán VNPay thất bại");
       }
 
-      // Chuyển hướng đến trang thanh toán OnePay
+      if (!data.success || !data.url) {
+        throw new Error("Không nhận được URL thanh toán từ VNPay");
+      }
+
+      console.log("VNPay payment URL generated:", data.url);
+      
+      // Chuyển hướng đến trang thanh toán VNPay
       window.location.href = data.url;
+
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Đã xảy ra lỗi khi xử lý thanh toán OnePay");
-      console.error("OnePay payment error:", err);
+      const errorMessage = err instanceof Error ? err.message : "Đã xảy ra lỗi khi xử lý thanh toán VNPay";
+      setError(errorMessage);
+      console.error("VNPay payment error:", err);
     } finally {
       setLoading(null);
     }
   };
 
-  const OnePayLogo = () => (
+  const VNPayLogo = () => (
     <img 
-      src="/images/onepay.png" 
-      alt="OnePay Logo" 
+      src="/images/vnpay-logo.jpg" 
+      alt="VNPay Logo" 
       style={{ 
         marginRight: "12px", 
         background: "white", 
@@ -374,7 +377,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
           </button>
           
           <button 
-            onClick={() => handlePayment('onepay')}
+            onClick={() => handlePayment('vnpay')}
             disabled={!!loading}
             style={{
               display: "flex",
@@ -384,17 +387,17 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
               padding: "12px 16px",
               borderRadius: "8px",
               border: "none",
-              background: loading === 'onepay' ? "#3a7bb8" : "#005baa",
+              background: loading === 'vnpay' ? "#3a7bb8" : "#005baa",
               color: "white",
               fontSize: "15px",
               fontWeight: "600",
               cursor: "pointer",
               transition: "all 0.2s ease",
-              opacity: loading && loading !== 'onepay' ? 0.7 : 1,
+              opacity: loading && loading !== 'vnpay' ? 0.7 : 1,
               height: "48px"
             }}
           >
-            {renderButtonContent('onepay', <OnePayLogo />, "Thanh toán bằng OnePay")}
+            {renderButtonContent('vnpay', <VNPayLogo />, "Thanh toán bằng VNPay")}
           </button>
         </div>
 
