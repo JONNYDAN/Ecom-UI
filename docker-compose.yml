@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: .
+      target: runner
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    # For production you probably don't want to mount source.
+    # To run production: docker compose up --build
+
+  dev:
+    image: node:18-alpine
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    command: sh -c "npm ci && npm run dev"
+    # Use for local dev with live reload:
+    # docker compose up dev
